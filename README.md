@@ -1,8 +1,8 @@
-# <a href="https://github.com/Gru-corp/Null/tree/base">Team leader</a>
+# <a href="https://github.com/Gru-corp/Null/tree/backend">Team leader</a>
 PolinaScrbbs - Ивановский Тимофей
 # <a href="https://github.com/Gru-corp/Null/tree/frontend">Frontend developer</a>
 Light2d - Жирков Павел
-# <a href="https://github.com/Gru-corp/Null/tree/additional">Backend developer</a>
+# <a href="https://github.com/Gru-corp/Null/tree/tester">Tester</a>
 Domsdoms1233 - Азаров Артём
 # <a href="https://github.com/Gru-corp/Null/tree/designer">Designer</a>
 shinsoku666 - Левков Станислав
