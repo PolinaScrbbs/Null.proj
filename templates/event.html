@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% load static %} {% block content %} {% if is_reg == False %}
+<div class="card" data-event="{{ event.id }}">
+    <img src="{% static 'null.png' %}" alt="" class="card__img">
+    <div class="card__info">
+        <div class="card__title">{{ event.title }}</div>
+        <div class="card__date">{{ event.date }}</div>
+        <div class="card__direction">{{ event.direction.title }}</div>
+    </div>
+</div>
+<a href="{% url 'reg_event' event.id %}">
+    <div class="button">
+        Зарегистрироваться
+    </div>
+</a>
+{% else %}
+<h1>Вы зарегестрированы на событии</h1>
+{% endif %} {% endblock content %}
