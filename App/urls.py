@@ -12,7 +12,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('profile/', profile, name='profile'),
+    path('@<str:username>', profile, name='profile'),
     path('upload_avatar/', upload_avatar, name='upload_avatar' )
 ]
 

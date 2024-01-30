@@ -1,5 +1,6 @@
 from django import forms
 from .models import Direction, Event
+from Auth.models import CustomUser
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -16,3 +17,10 @@ class EventForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
         self.fields['direction'].queryset = Direction.objects.filter(creator = user)
+
+class PhoneNumberForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['phone_number']
+
+    phone_number = forms.CharField(label='Введите ваш номер телефона', widget=forms.TextInput(attrs={'placeholder': 'Номер телефона'}))

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from Auth.models import CustomUser, Role
 from .models import Direction, Event, Participant
-from .forms import EventForm
+from .forms import EventForm, PhoneNumberForm
 from django.http import HttpResponse
 from django.http import JsonResponse
 from openpyxl import load_workbook
@@ -66,9 +66,16 @@ def event_form(request):
 
     return render(request, 'event_form.html', {'form': form})
 
-def profile(request):
-    user = CustomUser.objects.get(full_name=request.user)
+def profile(request, username):
+    user = request.user
     role = Role.objects.get(id=user.role_id)
+    phone_number_form = PhoneNumberForm
+    if request.method == 'POST':
+        phone_number_form = PhoneNumberForm(request.POST)
+        if phone_number_form.is_valid():
+            phone_number = phone_number_form.cleaned_data['phone_number']
+            CustomUser.objects.filter(id=user.id).update(phone_number=phone_number)
+
     # try:
     #     direction = Direction.objects.get(id=user.direction_id)
     # except Direction.DoesNotExist:
@@ -83,10 +90,11 @@ def profile(request):
         'title': 'Профиль',
         'user': user,
         'role': role,
+        'phone_number_form': phone_number_form
         # 'direction': direction,
         # 'event': event
     }
-    print(user.photo)
+
     return render(request, 'profile.html', context=context)
 
 def upload_avatar(request):

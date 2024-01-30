@@ -41,7 +41,7 @@
                     <ul>
                         {% if user.is_authenticated %}
                             <li class="dropdown__item">
-                                <a href="{% url 'profile' %}">
+                                <a href="{% url 'profile' request.user.username %}">
                                     <img src="img/login/user.svg" alt="">
                                     <span>Посмотреть профиль</span>
                                 </a>

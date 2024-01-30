@@ -19,8 +19,22 @@
             </label>
         {% endif %}
         <div class="profile__name">{{user.full_name}}</div> 
-        <div class="profile__mail"><span>Email:</span> {{user.email}}</div> 
-        <div class="profile__num"><span>Номер телефона:</span> {{user.phone_number}}</div> 
+        <div class="profile__mail"><span>Email:</span> {{user.email}}</div>
+        {% if user.phone_number == None %}
+            <form class="register__form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="register__inputs">
+                    {% for field in phone_number_form %}
+                        <div class="register__inputContainer">
+                            {{field}}
+                        </div>
+                    {% endfor %}
+                <a href="{% url 'profile' request.user.username %}">
+                    <button type="submit" class="register__btn btn">Добавить</button>
+                </a>
+        {% elif user.phone_number != None %}
+            <div class="profile__num"><span>Номер телефона:</span> {{user.phone_number}}</div>
+        {% endif %}
         <div class="profile__type"><span>Роль:</span> {{role}}</div> 
     </div>
 </div>

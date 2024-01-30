@@ -48,7 +48,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin, BaseInfo):
     REQUIRED_FIELDS = ['email', 'full_name']
 
     def __str__(self):
-        return self.full_name
+        return self.username
 
     class Meta:
         verbose_name = 'Пользователь'
