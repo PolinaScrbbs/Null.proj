@@ -1,5 +1,5 @@
 from django import forms
-from .models import Direction, Event
+from .models.models import Direction, Event
 from Auth.models import CustomUser
 
 class EventForm(forms.ModelForm):

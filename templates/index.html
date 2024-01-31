@@ -23,7 +23,7 @@
 
     <div class="cards">
         {% for event in events %}
-        <a href="{% url 'event' event.title %}">
+        <a href="{% url 'base_event' event.title %}">
             <div class="card" data-event="{{ event.id }}">
                 {% if event.avatar %}
                     <img src="{{ event.avatar.url }}" alt="" class="card__img">
