@@ -8,12 +8,17 @@ def index(request):
     if request.user.is_authenticated:
         
         directions = Direction.objects.all()
-        events = Event.objects.all() 
- 
+        events = Event.objects.all()
+
+        participant = Participant.objects.filter(participant = request.user)
+        participate_in =  participant #Список ивентов в которых участвует юзер
+        registered_events = participate_in.values_list('event__title', flat=True)
+
         context = { 
             'title': 'Главная страница', 
             'directions': directions, 
-            'events': events, 
+            'events': events,
+            'registered_events': registered_events
         }
 
         return render(request, 'index.html', context=context) 
@@ -54,17 +59,16 @@ def upload_avatar(request):
     # Если что-то пошло не так, возвращаем ошибку
     return JsonResponse({'error': 'Invalid request'})
 
-def base_event(request, title):
-    user = request.user
-    event = Event.objects.get(title=title)
+def event_info(request, event):
+
     context = {
         'event': event,
     }
-    return render(request, 'event.html', context)
+    return render(request, 'event/event_info.html', context)
 
-def reg_event(request, title):
+def reg_event(request, event):
     user = request.user
-    event = Event.objects.get(title=title)
+    event = Event.objects.get(title=event)
 
     try:
         Participant.objects.get(event=event, participant=user)
@@ -73,7 +77,7 @@ def reg_event(request, title):
         return redirect('task', event, task)
     except Participant.DoesNotExist:
         Participant.objects.create(event=event, participant=user)
-        return redirect('base_event', title)
+        return redirect('event', event)
     
 def event_form(request):
     if request.method == 'POST':
@@ -88,51 +92,61 @@ def event_form(request):
 
     return render(request, 'event_form.html', {'form': form})
 
-def task(request, event, task):
-    try:
+def event_task(request, event, task):
+    
+    if task == 'first':
         event = Event.objects.get(title=event)
-        participant = Participant.objects.get(participant=request.user, event=event)
-        tasks = Task.objects.filter(event=event)
+        task = Task.objects.filter(event=event).first() 
+    else:
+        event = Event.objects.get(title=event)
         
-        try:
-            results = Result.objects.filter(participant=participant, task__in=tasks)
-            result_titles = results.values_list('task__title', flat=True)
-            print(result_titles)
-        except:
-            results = None
+    tasks = Task.objects.filter(event=event)
+ 
+    participant = Participant.objects.get(participant=request.user, event=event)
+    results = Result.objects.filter(participant=participant, task__in=tasks)
+    result_titles = results.values_list('task__title', flat=True)
+    
+    if task.title in result_titles:
+        task = tasks.exclude(id__in=results.values('task')).first() #Первое задание, которого нет в результатах
         
-        if task is None:
-            task = tasks.exclude(id__in=results.values('task')).first() #Первое задание, которого нет в результатах
-        else:
-            task = Task.objects.get(title=task)
-            
-        context = {
-            'event' : event,
-            'tasks' : tasks,
-            'task' : task,
-            'results' : result_titles
-        }
+    context = {
+        'event' : event,
+        'tasks' : tasks,
+        'task' : task,
+        'results': result_titles
+    }
         
-        return render(request, 'task.html', context)
+    return render(request, 'event/event_task.html', context)
 
-    except:
-        title = event.title
-        return redirect('event', title)
-
-def task_result(request, event, task):
+def save_task_result(request, event, task):
     if request.method == 'POST':
         # Получите данные из формы
         result = request.POST.get('result')
         
-        result = Result.objects.get_or_create(
-            participant = Participant.objects.get(participant=request.user, event=Event.objects.get(title=event)),
-            task = Task.objects.get(title=task),
+        event = Event.objects.get(title=event)
+        participant = Participant.objects.get(participant=request.user, event=event)
+        task = Task.objects.get(title=task)
+
+        Result.objects.get_or_create(
+            participant = participant,
+            task = task,
             result = result,
         )
         
+        result = Result.objects.get(participant = participant, task = task)
+
         Result.right_check(result)
+
+        tasks = Task.objects.filter(event=event)
+
+        try:
+            results = Result.objects.filter(participant=participant, task__in=tasks)
+        except:
+            results = None
         
-        return redirect('task', event, task)
+        task = tasks.exclude(id__in=results.values('task')).first() #Первое задание, которого нет в результатах
+
+        return redirect('event', event, task)
             
 
 # def import_file_form(request):

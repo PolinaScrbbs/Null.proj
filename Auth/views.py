@@ -23,4 +23,4 @@ def registration(request):
         print('Не валидна')
         form = RegistrationForm()
 
-    return render(request, 'auth/registration.html', {'form': form})
+    return render(request, 'registration/registration.html', {'form': form})

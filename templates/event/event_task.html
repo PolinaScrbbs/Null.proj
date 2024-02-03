@@ -19,11 +19,11 @@
                         {% if cycletask.title in results %}
                             <li class="list-group-item list-group-item-dark">{{ cycletask.title }}</li>
                         {% elif cycletask.id == task.id %}
-                            <a href="{% url 'task' event.title cycletask.title %}">
+                            <a href="{% url 'event_task' event.title cycletask.title %}">
                                 <li class="list-group-item active" aria-current="true">{{ cycletask.title }}</li>
                             </a>  
                         {% else %}
-                            <a href="{% url 'task' event.title cycletask.title %}">
+                            <a href="{% url 'event_task' event.title cycletask.title %}">
                                 <li class="list-group-item">{{ cycletask.title }}</li> 
                             </a>
                         {% endif %}
@@ -31,11 +31,8 @@
 
                 </ul> 
             </div>
-            {% for result in results %}
-                {{result.task}}
-            {% endfor %}
             <div class="col-9">
-                <form method="post" action="{% url 'task_result' event.title task.title %}">
+                <form method="post" action="{% url 'save_task_result' event.title task.title %}">
                     {% csrf_token %}
                     <div class="form-floating">
                         <textarea class="form-control" name="result" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
@@ -48,10 +45,3 @@
     </div>
 </body>
 </html>
-
-
-
-
-
-
-

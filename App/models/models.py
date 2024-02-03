@@ -48,6 +48,7 @@ class EventResult(models.Model):
         verbose_name_plural = 'Результаты события'
     
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE, verbose_name='Участник')
+    # solved_count = models.PositiveSmallIntegerField(default=0, verbose_name='Количество решённых')
     is_completed = models.BooleanField(default=False)
     score = models.PositiveIntegerField(default=0, verbose_name='Баллы')
 
@@ -83,7 +84,6 @@ class TaskReward(Reward):
     
     task = models.OneToOneField(Task, on_delete=models.CASCADE, verbose_name='Задание')
 
-#Коментарии к заданию 
 class TaskComment(Comment):
     class Meta:
         verbose_name = 'Комментарий к заданию'
@@ -109,7 +109,12 @@ class Result(models.Model):
             reward_points = TaskReward.objects.get(task=self.task).ponts
             
             # Проверка на существование результатов участника, если нет, то создаём
-            event_result = EventResult.objects.get_or_create(participant=self.participant)
+            event_result, created = EventResult.objects.get_or_create(participant=self.participant)
 
+            # event_result.solved_count += 1
             event_result.score += reward_points
             event_result.save()
+
+    # def end_event(self):
+
+            
