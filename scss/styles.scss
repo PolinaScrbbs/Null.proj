@@ -1,0 +1,764 @@
+//<цвета>===============================================
+$white: #ffffff;
+$black: #000000;
+$fontFamily: "arial";
+$mainText: #2E2E2E;
+$purple: #5C0089;
+$bg: #185785;
+$mainBg: #1d242b;
+//<ПЕРЕМЕННЫЕ>=======================================================
+$maxWidth: 1920px;
+$md1: 1024.98;
+$md2: 991.98;
+$md3: 767.98;
+$md4: 479.98;
+
+//<АДАПАТИВ КОНТЕЙНЕРА>==============================================
+.container {
+  padding: 0 20px;
+  max-width: 1700px;
+  margin: 0 auto;
+
+  @media (max-width: $md1+px) {}
+
+  @media (max-width: $md3+px) {
+    padding: 0 20px;
+  }
+}
+
+//<импорты>==============================================
+@import "null";
+
+html,
+body {
+  overflow-x: hidden;
+  box-sizing: border-box;
+
+}
+
+body {
+  background: #00010B;
+  font-family: 'Rubik', sans-serif;
+
+  &._lock {
+    overflow: hidden;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+//<ОБОЛОЧКА>==============================================
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+
+.btn {
+  background: transparent;
+  border-radius: 5px;
+  border: 1px solid $white;
+  color: $white;
+  padding: 10px 30px;
+  font-size: 16px;
+}
+
+//============================REGISTER===============
+.register {
+  display: flex;
+  justify-content: center;
+  background: transparent;
+
+  // .register__card
+
+  &__card {
+    background: transparent;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    padding: 0 60px 60px 60px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 50px 1px rgba(255, 255, 255, .5);
+  }
+
+  // .register__logo
+
+  &__logo {
+    margin: 50px 0;
+  }
+
+  // .register__form
+
+  &__form {
+    color: white;
+
+    input {
+      background: transparent;
+      color: $white;
+    }
+  }
+
+  // .register__container
+
+  &__container {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  // .register__name
+
+  &__name {}
+
+  // .register__fullname
+
+  &__fullname {}
+
+  // .register__email
+
+  &__email {}
+
+  // .register__password
+
+  &__password {}
+
+  &__checkbox {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .register__conf {
+      margin-bottom: 10px;
+    }
+
+    .register__info {
+      margin-bottom: 50px;
+    }
+  }
+
+  // .register__button
+
+  &__button {
+    text-align: center;
+
+    a {
+      color: $white;
+      padding: 10px 20px;
+      background: none;
+      border: 1px solid $white;
+      margin-bottom: 50px;
+    }
+
+    margin-bottom: 40px;
+  }
+
+  // .register__bottom
+
+  &__bottom {
+    text-align: center;
+
+    a {
+      color: $white;
+      border-bottom: 1px solid $white;
+    }
+  }
+
+  &__banner {
+    display: flex;
+    background: transparent;
+    align-items: center;
+    padding: 20px 30px;
+    margin-bottom: 50px;
+    border: 1px solid #ffffff77;
+    margin-top: 4%;
+    border-radius: 5px;
+
+    @media(max-width: 1600px) {
+      margin-top: 25%;
+    }
+
+    @media(max-width: 1400px) {
+      margin-top: 28%;
+    }
+
+    @media(max-width: 1280px) {
+      margin-top: 30%;
+    }
+
+    @media(max-width: 1024px) {
+      margin-top: 40%;
+    }
+
+    @media(max-width: 848px) {
+      margin-top: 45%;
+    }
+
+    @media(max-width: 768px) {
+      margin-top: 48%;
+    }
+
+    @media(max-width: 568px) {
+      margin-top: 55%;
+    }
+
+  }
+
+  // .register__symbol
+
+  &__symbol {
+    color: $white;
+    font-weight: 900;
+    font-size: 24px;
+    border: 1px solid #FFD600;
+    padding: 5px;
+    margin-right: 10px;
+  }
+
+  // .register__title
+
+  &__title {
+    font-size: 28px;
+    color: $white;
+
+    span {
+      color: #FFD600;
+    }
+  }
+
+}
+
+
+//============================REGISTER===============
+.login {
+  display: flex;
+  justify-content: center;
+  background: transparent;
+
+  // .login__card
+
+  &__card {
+    background: transparent;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    padding: 0 60px 60px 60px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 50px 1px rgba(255, 255, 255, .5);
+
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    height: 70%;
+  }
+
+  // .login__logo
+
+  &__logo {
+    text-align: center;
+    margin: 50px 0;
+  }
+
+  // .login__form
+
+  &__form {
+    color: white;
+
+    input {
+      background: transparent;
+      color: $white;
+    }
+  }
+
+  // .login__container
+
+  &__container {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+
+    &:nth-child(2) {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__name {}
+
+  &__fullname {}
+
+  &__email {}
+
+  &__password {}
+
+  &__checkbox {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .register__conf {
+      margin-bottom: 10px;
+    }
+
+    .register__info {
+      margin-bottom: 50px;
+    }
+  }
+
+  // .login__button
+
+  &__button {
+    text-align: center;
+
+    a {
+      color: $white;
+      padding: 10px 40px;
+      background: none;
+      border: 1px solid $white;
+      margin-bottom: 50px;
+      border-radius: 3px;
+    }
+
+    margin-bottom: 40px;
+  }
+
+  // .login__bottom
+
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    div {
+      margin-bottom: 15px;
+    }
+
+    a {
+      color: $white;
+      text-decoration: underline;
+    }
+  }
+
+  &__banner {
+    display: flex;
+    background: transparent;
+    align-items: center;
+    padding: 20px 30px;
+    margin-bottom: 50px;
+    border: 1px solid #ffffff77;
+    margin-top: 3%;
+    border-radius: 5px;
+
+
+
+  }
+
+  // .login__symbol
+
+  &__symbol {
+    color: $white;
+    font-weight: 900;
+    font-size: 24px;
+    border: 1px solid #FFD600;
+    padding: 5px;
+    margin-right: 10px;
+  }
+
+  // .register__title
+
+  &__title {
+    font-size: 28px;
+    color: $white;
+
+    span {
+      color: #FFD600;
+    }
+  }
+
+}
+
+//===============INDEX===================
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ffffff17;
+
+  // .header__logo
+
+  &__logo {
+    img {
+      width: 70px;
+    }
+  }
+
+  // .header__list
+
+  &__list {
+    display: flex;
+    align-items: center;
+  }
+
+  // .header__link
+
+  &__link {
+    color: #AEAEAE;
+    margin-right: 10px;
+
+    span {
+      color: $purple;
+    }
+  }
+
+  // .header__btns
+
+  &__btns {}
+
+  // .header__loginBtn
+
+  &__loginBtn {
+    margin-right: 20px;
+    background: transparent;
+  }
+
+  &__regBtn {
+    border-color: $purple;
+  }
+}
+
+.intro {
+  background-image: url('/img/index/bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-top: 20%;
+  padding-bottom: 100px;
+  text-align: center;
+  // .intro__container
+
+  &__container {
+    padding: 50px 0;
+  }
+
+  // .intro__titl
+
+  &__title {
+    font-size: 72px;
+    margin-bottom: 20px;
+    color: $white;
+
+    span {
+      color: #6E348A;
+    }
+  }
+
+  // .intro__description
+
+  &__description {
+    color: $white;
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+
+  // .intro__btn
+
+  &__btn {
+    button {
+      background: $purple;
+      border: none;
+      padding: 15px 40px;
+    }
+  }
+}
+
+.hardSkills {
+  &__container {
+    background: linear-gradient(180deg, rgba(92, 0, 137, 0.27) 8%, rgba(92, 0, 137, 0.19) 46.5%, rgba(92, 0, 137, 0.14) 71.5%, rgba(70, 13, 97, 0.00) 89%);
+    box-shadow: 0px 0px 70px 20px #5C0089;
+    border-radius: 10px;
+    padding: 50px 0px 50px 50px;
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 100px;
+
+    div:first-child {
+      flex: 0 0 1;
+
+    }
+
+    div:last-child {
+      flex: 0 0 auto;
+    }
+  }
+
+  &__title {
+    color: $white;
+    margin-bottom: 30px;
+    font-size: 36px;
+
+    span {
+      color: $purple;
+    }
+  }
+
+  &__description {
+    margin-bottom: 40px;
+    color: $white;
+    line-height: 150%;
+    font-size: 18px;
+    width: 70%;
+  }
+
+  &__btn {
+    span {
+      color: $purple;
+    }
+  }
+}
+
+//===========blocks===========
+.blocks {
+
+  // .blocks__container
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    color: $white;
+    margin-bottom: 100px;
+  }
+
+  // .blocks__soft
+  &__soft {
+    box-shadow: 0px 0px 30px 0px #FFD600;
+    border-radius: 20px;
+    flex: 0 0 40%;
+
+    &__content {
+      padding: 30px 30px 30px 30px;
+    }
+
+    &__title {
+      font-size: 28px;
+      margin-bottom: 30px;
+
+      span {
+        color: #FFD600;
+      }
+    }
+
+    &__description {
+      font-size: 16px;
+      line-height: 130%;
+      margin-bottom: 50px;
+      width: 80%;
+    }
+
+    &__img {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    &__logo {
+      padding: 8px;
+      border: 1px solid #FFD600;
+      margin-bottom: 50px;
+    }
+
+    &__quote {
+      text-align: right;
+      font-size: 24px;
+
+      span {
+        color: #FFD600;
+        font-size: 18px;
+      }
+    }
+  }
+
+  // .blocks__right
+  &__right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 0 0 57%;
+
+    &__content {
+      padding: 150px 50px 200px 50px;
+    }
+  }
+
+  // .blocks__currency
+  &__currency {
+    box-shadow: 0px 0px 30px 0px #FFF;
+    border-radius: 20px;
+    margin-bottom: 20px;
+
+    &__title {
+      font-size: 28px;
+      margin-bottom: 50px;
+    }
+
+    &__description {
+      font-size: 16px;
+      line-height: 130%;
+      width: 80%;
+    }
+
+    &__img {}
+  }
+
+  &__none {
+    box-shadow: 0px 0px 30px 5px #5C0089;
+    border-radius: 20px;
+    padding: 170px 0;
+  }
+}
+
+//===========FOOTER===============
+.footer {
+
+  // .footer__container
+
+  &__container {
+    border-top: 1px solid rgba(255, 255, 255, 0.107);
+    margin-bottom: 20px;
+  }
+
+  // .footer__top
+
+  &__top {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.107);
+
+  }
+
+  // .footer__logo
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    line-height: 130%;
+    text-transform: uppercase;
+
+    span {
+      color: $purple;
+    }
+  }
+
+  // .footer__logoTitle
+
+  &__logoTitle {}
+
+  // .footer__lists
+
+  &__lists {
+    display: flex;
+    justify-content: space-between;
+    color: #949494;
+  }
+
+  // .footer__list
+
+  &__list {
+    &:not(:last-child) {
+      text-align: center;
+    }
+
+    &:last-child {
+      .footer__subtitle {
+        line-height: 130%;
+      }
+
+      .footer__subtitle:last-child {
+        span:nth-child(n+2):nth-child(-n+5) {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+
+  // .footer__link
+
+  &__subtitle {
+    &:first-child {
+      color: $white;
+      text-transform: uppercase;
+    }
+
+    margin-bottom: 20px;
+    font-size: 18px;
+
+    span {
+      color: $purple;
+    }
+  }
+
+  // .footer__bottom
+
+  &__bottom {}
+
+  // .footer__links
+
+  &__links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $white;
+  }
+
+  // .footer__socials
+
+  &__socials {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  // .footer__social
+
+  &__social{
+    width: 40px;
+    &:not(:last-child){
+      margin-right: 20px;
+    }
+    &:nth-child(2){
+      width: 45px;
+    }
+  }
+
+  // .footer__copyright
+
+  &__copyright {}
+
+  // .footer__link
+
+  &__link {
+    font-size: 18px;
+
+    &:nth-child(n+4) {
+      color: #949494;
+    }
+
+    span {
+      color: $purple;
+    }
+  }
+
+}
