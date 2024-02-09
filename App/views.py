@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
 from Auth.models import CustomUser, Role
 from .models.models import Direction, Event, Participant, Task, Result
-from .forms import EventForm, PhoneNumberForm
+from .forms import EventForm, PhoneNumberForm, CodeForm
 from django.http import JsonResponse
+import sys
+import io
+import json
+from django.templatetags.static import static
 
 def index(request): 
     if request.user.is_authenticated:
@@ -64,6 +68,7 @@ def event_info(request, event):
     context = {
         'event': event,
     }
+    
     return render(request, 'event/event_info.html', context)
 
 def reg_event(request, event):
@@ -71,9 +76,12 @@ def reg_event(request, event):
     event = Event.objects.get(title=event)
 
     try:
-        Participant.objects.get(event=event, participant=user)
+        participant = Participant.objects.get(event=event, participant=user)
         tasks = Task.objects.filter(event=event)
-        task = tasks.first().title
+
+        results = Result.objects.filter(participant=participant, task__in=tasks)
+        task = tasks.exclude(id__in=results.values('task')).first() #Первое задание, которого нет в результатах
+        
         return redirect('task', event, task)
     except Participant.DoesNotExist:
         Participant.objects.create(event=event, participant=user)
@@ -93,33 +101,60 @@ def event_form(request):
     return render(request, 'event_form.html', {'form': form})
 
 def event_task(request, event, task):
-    
+
     if task == 'first':
         event = Event.objects.get(title=event)
         task = Task.objects.filter(event=event).first() 
-    else:
-        event = Event.objects.get(title=event)
-        
+
+    event = Event.objects.get(title=event)
     tasks = Task.objects.filter(event=event)
  
     participant = Participant.objects.get(participant=request.user, event=event)
     results = Result.objects.filter(participant=participant, task__in=tasks)
-    result_titles = results.values_list('task__title', flat=True)
-    
-    if task.title in result_titles:
-        task = tasks.exclude(id__in=results.values('task')).first() #Первое задание, которого нет в результатах
+    results = results.values_list('task__title', flat=True)
     
     task = Task.objects.get(title = task)
-
+    
+    next_task = None
+    try:
+        for listTask in tasks.exclude(id__in=results.values('task')):
+            if listTask.id > task.id:
+                next_task = Task.objects.get(title=listTask.title)
+                break  
+    except:
+        next_task = None
+        
     context = {
         'event' : event,
         'tasks' : tasks,
         'task' : task,
+        'next_task': next_task,
+        'codeForm': CodeForm(),
         'programming_languages': task.programming_languages.all(),
-        'results': result_titles
+        'results': results
     }
         
     return render(request, 'event/event_task.html', context)
+
+def run_code(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        code = data.get('code', '')
+
+        # Создаем объект для перехвата вывода
+        stdout = io.StringIO()
+        sys.stdout = stdout  # Перенаправляем стандартный вывод в объект
+
+        try:
+            exec(code)  # Выполняем код
+            result = stdout.getvalue()  # Получаем результат из перехваченного вывода
+            sys.stdout = sys.__stdout__  # Возвращаем стандартный вывод
+            return JsonResponse({'CodeResult': result})
+        
+        except Exception as e:
+            sys.stdout = sys.__stdout__  # Возвращаем стандартный вывод в случае исключения
+            return JsonResponse({'CodeResult': str(e)})
+    return JsonResponse({'error': 'Метод запроса не поддерживается'})
 
 def save_task_result(request, event, task):
     if request.method == 'POST':

@@ -24,3 +24,6 @@ class PhoneNumberForm(forms.ModelForm):
         fields = ['phone_number']
 
     phone_number = forms.CharField(label='Введите ваш номер телефона', widget=forms.TextInput(attrs={'placeholder': 'Номер телефона'}))
+    
+class CodeForm(forms.Form):
+    code = forms.CharField(widget=forms.Textarea(attrs={'class': 'codemirror'}))
