@@ -9,11 +9,11 @@ class RegistrationForm(forms.ModelForm):
         model = CustomUser
         fields = ['username', 'full_name', 'email', 'password', 'password_check', 'agree_to_terms', 'mailing']
 
-    username = forms.CharField(label='username', widget=forms.TextInput(attrs={'placeholder': 'Ваше уникальное имя', 'image_url': '/media/auth/user.svg'}))
-    full_name = forms.CharField(label='Полное имя', widget=forms.TextInput(attrs={'placeholder': 'Введите ваше полное имя', 'image_url': '/media/auth/user.svg'}))
-    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'placeholder': 'Введите ваш e-mail', 'image_url': '/media/auth/email.svg'}))
+    username = forms.CharField(label='username', widget=forms.TextInput(attrs={'placeholder': 'Имя.Unique()', 'image_url': '/media/auth/user.svg'}))
+    full_name = forms.CharField(label='Полное имя', widget=forms.TextInput(attrs={'placeholder': 'Полное_имя.Split()', 'image_url': '/media/auth/user.svg'}))
+    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'placeholder': 'E-mail', 'image_url': '/media/auth/email.svg'}))
     
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль', 'image_url': '/media/auth/password.svg'}))
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'placeholder': 'Пароль', 'image_url': '/media/auth/password.svg'}))
     password_check = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput(attrs={'placeholder': 'Подтвердите пароль', 'image_url': '/media/auth/password.svg'}))
     
     agree_to_terms = forms.BooleanField(label='Создавая аккаунт, вы соглашаетесь с нашей политикой конфидециальности', required=True)

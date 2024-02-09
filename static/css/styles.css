@@ -389,7 +389,7 @@ img {
 }
 
 .intro {
-  background-image: url("/img/index/bg.png");
+  background-image: url("../img/index/bg.png");
   background-size: cover;
   background-repeat: no-repeat;
   padding-top: 20%;

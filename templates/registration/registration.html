@@ -4,50 +4,49 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
     <title>Регистрация</title>
 </head>
 
 <body>
     <div class="register">
-        <div class="register__logo">
-            <img src="{% static 'null.png' %}" alt="" class="">
+
+        <div class="register__banner">
+            <span class="register__symbol">
+                >_
+            </span>
+            <div class="register__title"><span>print</span>(f‘’Hello {NoneName})’’</div>
         </div>
+
         <div class="register__card">
-            <div class="register__title">Регистрация</div>
-            <form class="register__form" method="post" action="{% url 'registration' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="register__inputs">
+            <div class="register__logo">
+                <img src="{% static 'img/register/Логотип.png' %}" alt="">
+            </div>
+            <div class="register__form">
+                <form method="post" action="{% url 'registration' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
                     {% for field in form %}
                         {% if field.name == 'agree_to_terms' or field.name == 'mailing' %}
                             <div class="register__description" style="margin-top: 20px;">
-                                {{ field }} {{ field.label }} 
+                            {{ field }} {{ field.label }} 
                             </div>
                         {% else %}
-                            <div class="register__inputContainer">
-                                <img src="{{ field.field.widget.attrs.image_url }}" alt="" oncontextmenu="return false;" class="register__img">
-                                {{ field }}
+                            <div class="register__container">
+                                {{field}}
                             </div>
                         {% endif %}
-                        {% for error in field.errors %}
-                            <span class="error">{{ error }}</span>
-                        {% endfor %}
-                            
                     {% endfor %}
-                    
+                    <button class="register__button" type="submit">
+                        Создать аккаунт
+                    </button>
 
-
-                </div>
-                
-                <div class="register__btn">
-                    <button type="submit" class="register__btn btn">Создать аккаунт</button>
-                </div>
-                <div class="register__signup">
-                    <a href="{% url 'login' %}">Войдите</a> если у вас уже есть аккаунт.
-                </div>
-            </form>
+                    <div class="register__bottom">
+                        <a href="{% url 'login' %}">Войти</a>, если у вас уже есть аккаунт
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>

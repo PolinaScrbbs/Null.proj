@@ -1,58 +1,178 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
-<div class="data">
-    <div class="data__title">
-        Главная страница
-    </div>
-    <div class="data__items">
-        <div class="data__item">
-            <span>Поиск по дате с</span>
-            <input type="date" class="data__inputDate" onchange="filterResults()" id="startDate">
-            <span>По</span>
-            <input type="date" class="data__inputDate" onchange="filterResults()" id="endDate">
-        </div>
-        <div class="data__item">
-            <select onchange="filterResults()" id="directionSelect">
-                <option class='data__direction' id='direction-all' value="all">Все карточки</option>
-                {% for direction in directions %}
-                <option class='data__direction' id='direction-{{direction.title}}' value="{{direction.title}}">
-                    {{direction.title}}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-    <div class="cards">
-        {% for event in events %}
-            {% if event.title in registered_events %}
-                <a href="{% url 'event_task' event=event.title task='first' %}">
-            {% else %}
-                <a href="{% url 'event_info' event.title %}">
-            {% endif %}
-            <div class="card" data-event="{{ event.id }}">
-                {% if event.avatar %}
-                    <img src="{{ event.avatar.url }}" alt="" class="card__img">
-                {% else %}
-                    <img src="{% static 'null.png' %}" alt="" class="card__img">
-                {% endif %}
-                <div class="card__info">
-                    {% if event.title in registered_events %}
-                        <div class="card__title">Вы зарегестрированы</div>
-                    {% endif %}
-                    <div class="card__title">{{ event.title }}</div>
-                    <div class="card__date">{{ event.date }}</div>
-                    <div class="card__direction">{{ event.direction.title }}</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>.Null</title>
+</head>
+
+<body>
+    <header class="header container">
+        <div class="header__list">
+            <div class="header__link header__logo">
+                <img src="{% static 'img/index/logo.png' %}" alt="">
+            </div>
+            <div class="header__link">
+                О нас
+            </div>
+            <div class="header__link">
+                Ждём in <span>КГПК</span>
+            </div>
+        </div>
+        <div class="header__btns">
+            <a href="{% url 'login' %}">
+                <button class="header__loginBtn btn">Войти</button>
+            </a>
+            <a href="{% url 'registration' %}">
+                <button class="header__regBtn btn">Присоединиться</button>
+            </a>
+        </div>
+    </header>
+    <main>
+        <div class="intro">
+            <div class="intro__container container">
+                <div class="intro__title"><span>Становись лучше</span> <br> приняв вызов</div>
+                <div class="intro__description">
+                    Совершенствуйте свои навыки разработки, СОРЕВНУЯСЬ С которые постоянно <br>
+                    бросают вызов вашей практикекодирования и подталкивают ее.
+                </div>
+                <div class="intro__btn">
+                    <button class="btn">Начало работы</button>
                 </div>
             </div>
-        </a>
-        {% endfor %}
-    </div>
-    <div style='text-align: right;'>
-        <a href="\" class="btn btn_back">Назад</a>
-    </div>
-</div>
-{% endblock content %} {% block scripts %}
-<script src="{% static 'js/app.js' %}"></script>
+        </div>
 
-<script>
-</script>
-{% endblock scripts %}
+        <div class="hardSkills">
+            <div class="hardSkills__container container">
+                <div>
+                    <div class="hardSkills__title">
+                        Проявите свои <span>hard skills</span> <br>
+                        программирования
+                    </div>
+                    <div class="hardSkills__description">
+                        Испытайте себя в интереснейших мероприятиях по
+                        кодированию, Каждое разработано профессионалами, чтобы
+                        помочь вам усовершенствовать различные техники кодирования.
+                        Соревнуйясь с другими участниками Вам предстоит проявить
+                        все hard skills выбранного вами языка и даже больше,
+                        чтобы показать достойный результат
+                    </div>
+                    <div class="hardSkills__btn">
+                        <button class="btn">Проявить <span>скиллы</span></button>
+                    </div>
+                </div>
+                <div>
+                    <div class="hardSkills__img">
+                        <img src="{% static 'img/index/code.png' %}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="blocks">
+            <div class="blocks__container container">
+                <div class="blocks__soft">
+                    <div class="blocks__soft__content">
+                        <img class="blocks__soft__logo" src="{% static 'img/index/message.svg' %}" alt="">
+                        <div class="blocks__soft__title">Покажите свои <br> <span>soft skills</span></div>
+                        <div class="blocks__soft__description">
+                            Не теряйте возможность и покажите свои Soft Skills, ведь это возможность получить
+                            преимущество. найдите способ пообщаться с
+                            кем - то, скорее всего вы узнаете что - то новое,
+                            что поможет вам в ваших испытаниях.
+                        </div>
+                        <div class="blocks__soft__img">
+                        <img src="{% static 'img/index/peoples.png' %}" alt="">
+                        </div>
+                        <div class="blocks__soft__quote"> "Подумай" <br> <span>©Александр Хараули</span></div>
+                    </div>
+                </div>
+                <div class="blocks__right">
+                    <div class="blocks__currency">
+                        <div class="blocks__right__content">
+                            <div class="blocks__currency__title">Зарабатывайте звёздочки на <br> погоны и русские
+                                бублики</div>
+                            <div class="blocks__currency__description">
+                                Задания по кодированию ранжируются от уровня новичка до уровня эксперта. Выполняя
+                                задания с более высоким рейтингом, вы повышаете свой профиль и максимально раскрываете
+                                свои навыки разработки ПО
+                            </div>
+                        </div>
+                    </div>
+                    <div class="blocks__none"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer__container container">
+            <div class="footer__top">
+                <div class="footer__lists">
+                    <div class="footer__list">
+                        <div class="footer__logo">
+                            <img src="{% static 'img/index/logo.png' %}" alt="">
+                            <div class="footer__logoTitle"> <span>Становись лучше</span> <br> приняв вызов </div>
+                        </div>
+                    </div>
+                    <div class="footer__list">
+                        <div class="footer__subtitle"> &lt; <span>LIST</span> &gt; Преподаватели</div>
+                        <div class="footer__subtitle">Партнёрство</div>
+                        <div class="footer__subtitle">Light Тудэ</div>
+                    </div>
+                    <div class="footer__list">
+                        <div class="footer__subtitle"> &lt; <span>LIST</span> &gt; Преподаватели</div>
+                        <div class="footer__subtitle">Партнёрство</div>
+                        <div class="footer__subtitle">Состав <span>кгпк</span> </div>
+                    </div>
+                    <div class="footer__list">
+                        <div class="footer__subtitle">&lt; <span>LINK</span> &gt; социальные сети &lt;/
+                            <span>Link</span>
+                            &gt;
+                        </div>
+                        <div class="footer__subtitle"><span>href</span>=” <span>КГПК</span> II корпус”</div>
+                        <div class="footer__subtitle"><span>href</span>=”informatics & ВТ”</div>
+                        <div class="footer__subtitle"><span>href</span>=”<span>КГПК</span>trajectory””</div>
+                    </div>
+                    <div class="footer__list">
+                        <div class="footer__subtitle">&lt; <span>pretension</span> : <span>Pretension</span> &gt; КНИГА
+                            ЖАЛОБ </div>
+                        <div class="footer__subtitle"><span>pretension &lt; Pretension &gt; </span>=[ <br>
+                            <span>title</span>="УЖС", <br> <span>about</span>=ПОЛИНЧОКА SCRBBS <br> ]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <div class="footer__links">
+                    <div class="footer__socials">
+                        <div class="footer__social">
+                            <a href="/"><img src="{% static '/img/socials/tg.svg' %}" alt=""></a>
+                        </div>
+                        <div class="footer__social">
+                            <a href=""><img src="{% static '/img/socials/vk.svg' %}" alt=""></a>
+                        </div>
+                        <div class="footer__social">
+                            <a href=""><img src="{% static '/img/socials/kgpk.png' %}" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="footer__link">
+                        © 2024 <span>NULL</span>. Все права защищены.
+                    </div>
+                    <div class="footer__link">
+                        MADE IN <span>КГПК</span>
+                    </div>
+                    <div class="footer__link">
+                        Политика коэнфидициальности
+                    </div>
+                    <div class="footer__link">
+                        О нас
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from djangocodemirror.settings import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,6 +29,7 @@ INSTALLED_APPS = [
     
     'Auth',
     'App',
+    'codemirror'
     
 ]
 

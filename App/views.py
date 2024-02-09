@@ -21,9 +21,9 @@ def index(request):
             'registered_events': registered_events
         }
 
-        return render(request, 'index.html', context=context) 
+        return render(request, 'indexСтарый.html', context=context) 
     else: 
-        return redirect('registration')
+        return render(request, 'index.html')
     
 def profile(request, username):
     user = CustomUser.objects.get(username=username)
@@ -108,11 +108,14 @@ def event_task(request, event, task):
     
     if task.title in result_titles:
         task = tasks.exclude(id__in=results.values('task')).first() #Первое задание, которого нет в результатах
-        
+    
+    task = Task.objects.get(title = task)
+
     context = {
         'event' : event,
         'tasks' : tasks,
         'task' : task,
+        'programming_languages': task.programming_languages.all(),
         'results': result_titles
     }
         
