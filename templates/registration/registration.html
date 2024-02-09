@@ -12,14 +12,6 @@
 
 <body>
     <div class="register">
-
-        <div class="register__banner">
-            <span class="register__symbol">
-                >_
-            </span>
-            <div class="register__title"><span>print</span>(f‘’Hello {NoneName})’’</div>
-        </div>
-
         <div class="register__card">
             <div class="register__logo">
                 <img src="{% static 'img/register/Логотип.png' %}" alt="">
@@ -28,19 +20,21 @@
                 <form method="post" action="{% url 'registration' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form %}
-                        {% if field.name == 'agree_to_terms' or field.name == 'mailing' %}
-                            <div class="register__description" style="margin-top: 20px;">
-                            {{ field }} {{ field.label }} 
-                            </div>
-                        {% else %}
-                            <div class="register__container">
-                                {{field}}
-                            </div>
-                        {% endif %}
+                    {% if field.name == 'agree_to_terms' or field.name == 'mailing' %}
+                    <div class="register__description">
+                        {{ field }} {{ field.label }}
+                    </div>
+                    {% else %}
+                    <div class="register__container">
+                        {{field}}
+                    </div>
+                    {% endif %}
                     {% endfor %}
-                    <button class="register__button" type="submit">
-                        Создать аккаунт
-                    </button>
+                    <div class="register__button">
+                        <button class="btn" type="submit">
+                            Создать аккаунт
+                        </button>
+                    </div>
 
                     <div class="register__bottom">
                         <a href="{% url 'login' %}">Войти</a>, если у вас уже есть аккаунт

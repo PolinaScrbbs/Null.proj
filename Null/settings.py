@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     
     'Auth',
     'App',
-    'codemirror'
     
 ]
 

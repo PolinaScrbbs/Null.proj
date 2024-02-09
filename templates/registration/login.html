@@ -12,14 +12,6 @@
 
 <body>
     <div class="login">
-
-        <div class="login__banner">
-            <span class="login__symbol">
-                >_
-            </span>
-            <div class="login__title"><span>print</span>(f‘’Hello {NoneName})’’</div>
-        </div>
-
         <div class="login__card">
             <div class="login__logo">
                 <img src="{% static 'img/register/Логотип.png' %}" alt="">
@@ -27,19 +19,24 @@
             <div class="login__form">
                 <form method="post" action="{% url 'login' %}">
                     {% csrf_token %}
-                    
+
                     <div class="login__container">
-                        <input type="text" class="login__name" placeholder="UserName.Unique()" name="{{ form.username.name }}">
+                        <input type="text" class="login__name" placeholder="UserName.Unique()"
+                            name="{{ form.username.name }}">
                         {{ form.username.errors }}
-                        
-                        <input type="password" class="password__name" placeholder="Пароль" name="{{ form.password.name }}">
+                    </div>
+                    <div class="login__container">
+                        <input type="password" class="password__name" placeholder="Пароль"
+                            name="{{ form.password.name }}">
                         {{ form.password.errors }}
                     </div>
-                    
-                    <button class="login__button" type="submit">Войти</button>
-                    
+                    <div class="login__button">
+                        <button class="btn" type="submit">Войти</button>
+                    </div>
+
                     <div class="login__bottom">
-                        <div><a href="{% url 'registration' %}">Зарегистрироваться</a>, если у вас еще нет аккаунта</div>
+                        <div><a href="{% url 'registration' %}">Зарегистрироваться</a>, если у вас еще нет аккаунта
+                        </div>
                         <a href="{% url 'reset_password' %}">Забыли пароль?</a>
                     </div>
                 </form>
