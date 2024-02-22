@@ -5,6 +5,8 @@ from .abstract import Comment, Reward
 from .Keys.event import Tag
 from .Keys.task import ProgrammingLanguage
 
+from django.utils import timezone
+
 class Direction(models.Model):
     class Meta:
         verbose_name = 'Направление'
@@ -15,6 +17,16 @@ class Direction(models.Model):
 
     def __str__(self):
         return self.title
+    
+class EventStatus(models.Model):
+    class Meta:
+        verbose_name = 'Статус события'
+        verbose_name_plural = 'Статусы события'
+
+    title = models.CharField(max_length=20, unique=True, verbose_name='Статус события')
+
+    def __str__(self):
+        return self.title
   
 class Event(models.Model):
     class Meta:
@@ -22,12 +34,39 @@ class Event(models.Model):
         verbose_name_plural = 'События'
     
     avatar = models.ImageField(upload_to='media/events', blank=True, verbose_name='Аватар')
+    direction = models.ForeignKey(Direction, on_delete=models.CASCADE, verbose_name='Направление')
     title = models.CharField(max_length=20, unique=True, verbose_name='Мероприятие')
     description = models.TextField(blank=True, verbose_name='Описание')
     tag = models.ManyToManyField(Tag, verbose_name='Теги')
-    direction = models.ForeignKey(Direction, on_delete=models.CASCADE, verbose_name='Направление')
-    date = models.DateField(verbose_name='Дата мероприятия')
-    
+    number_of_participants = models.PositiveIntegerField(default=0, verbose_name='Количестов участников')
+    status = models.ForeignKey(EventStatus, default=1, on_delete=models.CASCADE, verbose_name='Статус события')
+    date = models.DateTimeField(verbose_name='Дата и время начала события')
+    duration = models.DurationField(verbose_name='Длительность события')
+    completed = models.BooleanField(default=None, verbose_name='Завершено?')
+
+    def number_of_participants_update(self):
+        self.number_of_participants = Participant.objects.filter(event=self).count()
+        self.save()
+
+    def get_time_before_event_start(self):
+        return self.date - timezone.now()
+
+    def get_event_remaining_time(self):
+        event_end_time = self.date + self.duration
+        return event_end_time - timezone.now()
+
+    def event_status_update(self):
+        time_to_start = self.get_time_before_event_start()
+        if time_to_start < timezone.timedelta(0):
+            self.status = EventStatus.objects.get(id=2)
+        elif self.get_event_remaining_time() < timezone.timedelta(0):
+            self.status = EventStatus.objects.get(id=3)
+            
+    def save(self, *args, **kwargs):
+        self.number_of_participants_update()
+        self.event_status_update()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
     

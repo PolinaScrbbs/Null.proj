@@ -12,12 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.js"></script>
 
-    <style>
-        .error-line {
-      background-color: rgba(255, 0, 0, 0.2); /* Красный фон для строки с ошибкой */
-    }
-    </style>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.js"></script>
 
     <!-- CodeMirror -->
@@ -48,7 +42,6 @@
     
     <!-- Python -->
     <script src="{% static 'codemirror/modes/python/python.js' %}"></script>
-    <script src="{% static 'codemirror/modes/python/test.js' %}"></script> 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/clike/clike.min.js"></script> <!-- Java, С++, C#, C -->
 
@@ -83,14 +76,14 @@
                             <ul class="list-group">
                                 {% for taskList in tasks %}
                                     {% if taskList.title in results %}
-                                        <li class="list-group-item list-group-item-dark">{{ taskList.title }}</li>
+                                        <li class="list-group-item list-group-item-dark" id="{{taskList.id}}"">{{ taskList.title }}</li>
                                     {% elif taskList.title == task.title %}
                                         <a href="{% url 'event_task' event.title taskList.title %}">
-                                            <li class="list-group-item active" aria-current="true">{{ taskList.title }}</li>
+                                            <li class="list-group-item active" aria-current="true" id="BtnTask{{taskList.id}}">{{ taskList.title }}</li>
                                         </a>  
                                     {% else %}
                                         <a href="{% url 'event_task' event.title taskList.title %}">
-                                            <li class="list-group-item">{{ taskList.title }}</li> 
+                                            <li class="list-group-item" id="{{taskList.id}}">{{ taskList.title }}</li> 
                                         </a>
                                     {% endif %}
                                 {% endfor %}
@@ -113,8 +106,6 @@
                         </ul>
                     </div>
                 </div>
-                <!-- action="{% url 'save_task_result' event.title task.title %} -->
-                    {% csrf_token %}
                     <textarea id="code" name="code" class="form-control" rows="10"></textarea>
                     <div class="d-flex justify-content-between">
                         <div>
@@ -127,7 +118,7 @@
                         </div>
                         <div>
                             <button class="btn btn-dark" id = "runButton">Run Code</button>
-                            <button type="button" class="btn btn-outline-success">Отправить</button>
+                            <button class="btn btn-outline-success" id = "resultBotton">Отправить</button>
                         </div>
                     </div>
             </div>
@@ -135,9 +126,112 @@
     </div>
 </body>
 
-<script src="{% static 'codemirror\editor.js' %}"></script>
-
 <script>
+    
+    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+    theme: 'null',
+    mode: 'python',
+    indentUnit: 4, //Tab
+    lineNumbers: true, //Циферки
+    hintOptions: { // Параметры для автодополнения
+        hint: CodeMirror.hint.python, // Функция автодополнения для Python
+        completeSingle: false // Показывать автодополнение даже при вводе одиночного символа
+    }
+});
+
+editor.on("change", function(cm, change) {
+    if (change.text.length === 1 && /^[a-zA-Z0-9_]$/.test(change.text[0])) {
+        cm.showHint(); 
+    }
+});
+
+function getCSRFToken() {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Ищем CSRF токен по имени "csrftoken"
+            if (cookie.substring(0, 10) === 'csrftoken=') {
+                cookieValue = decodeURIComponent(cookie.substring(10));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+    
+const run_btn = document.getElementById('runButton');
+const result_btn = document.getElementById('resultBotton');
+const csrftoken = getCSRFToken(); // Получение CSRF токена
+
+run_btn.addEventListener('click', () => {
+    runCode();
+});
+
+result_btn.addEventListener('click', () => {
+    saveResult();
+});
+
+function runCode() {
+    var code = editor.getValue();
+    console.log('КОД ' + code);
+
+    fetch('/run_code/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify({ code: code }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('output').innerText = data.CodeResult;
+        document.getElementById('btn_output_data').click();
+    })
+    .catch(error => console.error('Ошибка:', error));
+}
+
+function saveResult() {
+    var code = editor.getValue();
+    var save_result = "True"; // Пример значения для save_result
+    var event_title = "{{ event.title }}"; // Получение заголовка события из Django
+    var task_title = "{{ task.title }}"; // Получение заголовка задачи из Django
+
+    fetch('/save_result/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify({
+            code: code, 
+            save_result: save_result, 
+            event_title: event_title,
+            task_title: task_title
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        const url = `/${data.event}/last/`;  // Замените на путь к вашему представлению и добавьте параметры, если это необходимо
+        window.location.href = url;  // Осуществляем редирект
+    })
+    .catch(error => console.error('Ошибка:', error));
+}
+
+ function changeMode(language) {
+    language = language.toLowerCase();
+    console.log(language)
+    // Обновляем режим в соответствии с выбранным языком
+    editor.setOption("mode", language);
+}
+
+const btn_reset = document.getElementById('btn_reset')
+
+btn_reset.addEventListener('click', () => {
+    editor.setValue('{{ task.answer_structure }}');
+})
     const btn_task = document.getElementById('btn_task');
     const btn_output_data = document.getElementById('btn_output_data');
     const btn_tasks = document.getElementById('btn_tasks');
@@ -198,4 +292,5 @@
         });
     });
 </script>
+
 </html>

@@ -24,7 +24,7 @@
     <div class="cards">
         {% for event in events %}
             {% if event.title in registered_events %}
-                <a href="{% url 'event_task' event=event.title task='first' %}">
+                <a href="{% url 'event_last_task' event.title %}">
             {% else %}
                 <a href="{% url 'event_info' event.title %}">
             {% endif %}
@@ -39,6 +39,11 @@
                         <div class="card__title">Вы зарегестрированы</div>
                     {% endif %}
                     <div class="card__title">{{ event.title }}</div>
+                    {% if event.number_of_participants == 0 %}
+                    <div class="card__title">Количество участников: Null</div>
+                    {% else %}
+                    <div class="card__title">Количество участников: {{ event.number_of_participants }}</div>
+                    {% endif %}
                     <div class="card__date">{{ event.date }}</div>
                     <div class="card__direction">{{ event.direction.title }}</div>
                 </div>

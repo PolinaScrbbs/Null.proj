@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from django.urls import path
-from .views import index, profile, upload_avatar, event_info, reg_event, event_task, run_code, save_task_result, event_form 
+from .views import index, profile, upload_avatar, event_info, reg_event, event_task, run_code, event_form 
 
 urlpatterns = [
     path('', index, name='index'),
@@ -13,8 +13,9 @@ urlpatterns += [
     path('#<str:event>/', event_info, name='event_info'),
     path('reg_event/<str:event>/', reg_event, name='reg_event'),
     path('<str:event>/<str:task>/', event_task, name='event_task'),
+    path('<str:event>/last', event_task, name='event_last_task'),
     path('run_code/', run_code, name='run_code'),
-    path('result/<str:event>/<str:task>/', save_task_result, name='save_task_result')
+    path('save_result/', run_code, name='save_task_result')
 ]
 
 urlpatterns += [

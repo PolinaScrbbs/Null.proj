@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models.models import Direction, Event, Participant, TaskComment, Task, EventResult, TestData, TaskReward, Result
+from .models.models import Direction, EventStatus, Event, Participant, TaskComment, Task, EventResult, TestData, TaskReward, Result
 from .models.Keys.event import Tag
 from .models.Keys.task import ProgrammingLanguage
 
@@ -8,6 +8,10 @@ from .models.Keys.task import ProgrammingLanguage
 class DirectionAdmin(admin.ModelAdmin):
     list_display = ('title', 'creator')
     search_fields = ('title', 'creatorfull__name', 'creator__email')
+
+@admin.register(EventStatus)
+class EventStatusAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):

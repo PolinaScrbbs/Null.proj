@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
-from Auth.models import CustomUser, Role
-from .models.models import Direction, Event, Participant, Task, Result
-from .forms import EventForm, PhoneNumberForm, CodeForm
-from django.http import JsonResponse
 import sys
 import io
 import json
-from django.templatetags.static import static
+from django.http import JsonResponse
+
+from django.shortcuts import render, redirect
+
+from Auth.models import CustomUser, Role
+from .models.models import Direction, Event, Participant, Task, Result
+from .forms import EventForm, PhoneNumberForm
 
 def index(request): 
     if request.user.is_authenticated:
@@ -64,28 +65,32 @@ def upload_avatar(request):
     return JsonResponse({'error': 'Invalid request'})
 
 def event_info(request, event):
+    try:
+        Participant.objects.get(event=Event.objects.get(title=event), participant=CustomUser.objects.get(username=request.user))
+        is_reg = True
+    except:
+        is_reg = False
 
     context = {
         'event': event,
+        'is_reg': is_reg
     }
-    
+
     return render(request, 'event/event_info.html', context)
 
 def reg_event(request, event):
-    user = request.user
+    user = CustomUser.objects.get(username=request.user)
     event = Event.objects.get(title=event)
 
-    try:
-        participant = Participant.objects.get(event=event, participant=user)
+    participant, created = Participant.objects.get_or_create(event=event, participant=user)
+    if not created:
         tasks = Task.objects.filter(event=event)
-
-        results = Result.objects.filter(participant=participant, task__in=tasks)
-        task = tasks.exclude(id__in=results.values('task')).first() #Первое задание, которого нет в результатах
-        
-        return redirect('task', event, task)
-    except Participant.DoesNotExist:
-        Participant.objects.create(event=event, participant=user)
-        return redirect('event', event)
+        task = tasks.first().title
+        return redirect('event_task', event = event.title, task = task)
+    
+    else:
+        event.number_of_participants_update()
+        return redirect('event_info', event = event.title)
     
 def event_form(request):
     if request.method == 'POST':
@@ -100,38 +105,31 @@ def event_form(request):
 
     return render(request, 'event_form.html', {'form': form})
 
-def event_task(request, event, task):
-
-    if task == 'first':
-        event = Event.objects.get(title=event)
-        task = Task.objects.filter(event=event).first() 
-
+def event_task(request, **kwargs):
+    event = kwargs.get('event')
     event = Event.objects.get(title=event)
     tasks = Task.objects.filter(event=event)
- 
     participant = Participant.objects.get(participant=request.user, event=event)
-    results = Result.objects.filter(participant=participant, task__in=tasks)
-    results = results.values_list('task__title', flat=True)
+    task = kwargs.get('task', None)
+    
+    try:
+        results = Result.objects.filter(participant=participant, task__in=tasks)
+    except:
+        results = None
+
+    if not task:
+        task = tasks.exclude(id__in=results.values('task')).first() #Первое задание, которого нет в результатах
+
+    result_titles = results.values_list('task__title', flat=True)
     
     task = Task.objects.get(title = task)
-    
-    next_task = None
-    try:
-        for listTask in tasks.exclude(id__in=results.values('task')):
-            if listTask.id > task.id:
-                next_task = Task.objects.get(title=listTask.title)
-                break  
-    except:
-        next_task = None
-        
+
     context = {
         'event' : event,
         'tasks' : tasks,
         'task' : task,
-        'next_task': next_task,
-        'codeForm': CodeForm(),
         'programming_languages': task.programming_languages.all(),
-        'results': results
+        'results': result_titles
     }
         
     return render(request, 'event/event_task.html', context)
@@ -144,47 +142,55 @@ def run_code(request):
         # Создаем объект для перехвата вывода
         stdout = io.StringIO()
         sys.stdout = stdout  # Перенаправляем стандартный вывод в объект
-
         try:
             exec(code)  # Выполняем код
             result = stdout.getvalue()  # Получаем результат из перехваченного вывода
+            save_result = data.get('save_result', None)  # Извлекаем параметр из данных запроса
+            if save_result != None:
+                event_title = data.get('event_title')
+                task_title = data.get('task_title')
+                event = Event.objects.get(title=event_title)
+                participant = Participant.objects.get(participant=request.user)
+                task = Task.objects.get(event=event, title=task_title)
+                Result.objects.create(participant=participant, task=task, result=result)
+                return JsonResponse({'redirect': 'event_last_task', 'event': event_title})
             sys.stdout = sys.__stdout__  # Возвращаем стандартный вывод
             return JsonResponse({'CodeResult': result})
         
         except Exception as e:
             sys.stdout = sys.__stdout__  # Возвращаем стандартный вывод в случае исключения
-            return JsonResponse({'CodeResult': str(e)})
+            return JsonResponse({'error': str(e)})
     return JsonResponse({'error': 'Метод запроса не поддерживается'})
 
-def save_task_result(request, event, task):
-    if request.method == 'POST':
-        # Получите данные из формы
-        result = request.POST.get('result')
+# def save_task_result(request, event, task):
+#     if request.method == 'POST':
+#         # Получите данные из формы
+#         result = request.POST.get('result')
         
-        event = Event.objects.get(title=event)
-        participant = Participant.objects.get(participant=request.user, event=event)
-        task = Task.objects.get(title=task)
+#         event = Event.objects.get(title=event)
+#         participant = Participant.objects.get(participant=request.user, event=event)
+#         task = Task.objects.get(title=task)
 
-        Result.objects.get_or_create(
-            participant = participant,
-            task = task,
-            result = result,
-        )
+#         Result.objects.get_or_create(
+#             participant = participant,
+#             task = task,
+#             result = result,
+#         )
         
-        result = Result.objects.get(participant = participant, task = task)
+#         result = Result.objects.get(participant = participant, task = task)
 
-        Result.right_check(result)
+#         Result.right_check(result)
 
-        tasks = Task.objects.filter(event=event)
+#         tasks = Task.objects.filter(event=event)
 
-        try:
-            results = Result.objects.filter(participant=participant, task__in=tasks)
-        except:
-            results = None
+#         try:
+#             results = Result.objects.filter(participant=participant, task__in=tasks)
+#         except:
+#             results = None
         
-        task = tasks.exclude(id__in=results.values('task')).first() #Первое задание, которого нет в результатах
+#         task = tasks.exclude(id__in=results.values('task')).first() #Первое задание, которого нет в результатах
 
-        return redirect('event', event, task)
+#         return redirect('event', event, task)
             
 
 # def import_file_form(request):

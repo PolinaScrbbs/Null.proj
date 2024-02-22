@@ -9,30 +9,10 @@
     }
 });
 
-
 editor.on("change", function(cm, change) {
     if (change.text.length === 1 && /^[a-zA-Z0-9_]$/.test(change.text[0])) {
         cm.showHint(); 
     }
-});
-
-// Добавляем функциональность поиска
-var searchCursor = editor.getSearchCursor('искомый текст', null, true);
-
-function search() {
-  if (searchCursor.findNext()) {
-    // Найдено совпадение, делаем что-то с ним
-    // Например, можем выделить найденный текст
-    editor.setSelection(searchCursor.from(), searchCursor.to());
-  } else {
-    // Совпадения не найдены
-    alert('Совпадения не найдены');
-  }
-}
-
-// Обработчик для кнопки поиска
-document.getElementById('searchButton').addEventListener('click', function() {
-  search();
 });
 
 function getCSRFToken() {
@@ -75,7 +55,6 @@ run_btn.addEventListener('click', () => {
             .catch(error => console.error('Ошибка:', error));
 
 })
-
 
  function changeMode(language) {
     language = language.toLowerCase();

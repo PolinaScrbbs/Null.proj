@@ -28,8 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'Auth',
-    'App',
-    
+    'App' 
 ]
 
 MIDDLEWARE = [
@@ -91,6 +90,10 @@ EMAIL_PORT = 587 #Порт gmail
 EMAIL_USE_TLS = True #Использовать защищенное соединение
 EMAIL_HOST_USER = 'polinascaraboobs@gmail.com'
 EMAIL_HOST_PASSWORD = 'auqt begs eumx ttqo'
+
+# Настройки Celery
+CELERY_BROKER_URL = 'amqp://localhost'  # URL для подключения к RabbitMQ
+CELERY_RESULT_BACKEND = 'rpc://'  # URL для хранения результатов выполнения задач
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
