@@ -7,6 +7,9 @@ from .Keys.task import ProgrammingLanguage
 
 from django.utils import timezone
 
+from ..utils import execute_code
+from itertools import zip_longest
+
 class Direction(models.Model):
     class Meta:
         verbose_name = 'Направление'
@@ -48,24 +51,24 @@ class Event(models.Model):
         self.number_of_participants = Participant.objects.filter(event=self).count()
         self.save()
 
-    def get_time_before_event_start(self):
-        return self.date - timezone.now()
+    # def get_time_before_event_start(self):
+    #     return self.date - timezone.now()
 
-    def get_event_remaining_time(self):
-        event_end_time = self.date + self.duration
-        return event_end_time - timezone.now()
+    # def get_event_remaining_time(self):
+    #     event_end_time = self.date + self.duration
+    #     return event_end_time - timezone.now()
 
-    def event_status_update(self):
-        time_to_start = self.get_time_before_event_start()
-        if time_to_start < timezone.timedelta(0):
-            self.status = EventStatus.objects.get(id=2)
-        elif self.get_event_remaining_time() < timezone.timedelta(0):
-            self.status = EventStatus.objects.get(id=3)
+    # def event_status_update(self):
+    #     time_to_start = self.get_time_before_event_start()
+    #     if time_to_start < timezone.timedelta(0):
+    #         self.status = EventStatus.objects.get(id=2)
+    #     elif self.get_event_remaining_time() < timezone.timedelta(0):
+    #         self.status = EventStatus.objects.get(id=3)
             
-    def save(self, *args, **kwargs):
-        self.number_of_participants_update()
-        self.event_status_update()
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.number_of_participants_update()
+    #     self.event_status_update()
+    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -141,19 +144,31 @@ class Result(models.Model):
     is_right = models.BooleanField(default=False, verbose_name='Правильность')
     
     def right_check(self):
-        self.is_right = self.result == self.task.answer
-        self.save()
+        test_data = TestData.objects.filter(task=self.task)
+        input_data_list = [data.input_data for data in test_data]
+        output_data = [data.output_data for data in test_data]
+
+        correct_tests = 0
+
+        for j in range(len(input_data_list)):
+            input_data = [x.strip() for x in input_data_list[j].split(", ")]
+            test_result, success = execute_code(self.result, input_data)
+            if success:
+                if str(test_result).strip() == str(output_data[j].strip()):
+                    correct_tests += 1
+
+        if correct_tests == len(input_data_list):
+            self.is_right = True
+            self.save()
 
         if self.is_right:
             reward_points = TaskReward.objects.get(task=self.task).ponts
-            
+
             # Проверка на существование результатов участника, если нет, то создаём
             event_result, created = EventResult.objects.get_or_create(participant=self.participant)
 
             # event_result.solved_count += 1
             event_result.score += reward_points
             event_result.save()
-
-    # def end_event(self):
 
             

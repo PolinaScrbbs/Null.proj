@@ -20,7 +20,6 @@ def registration(request):
 
             return redirect('index')
     else:
-        print('Не валидна')
         form = RegistrationForm()
 
     return render(request, 'registration/registration.html', {'form': form})

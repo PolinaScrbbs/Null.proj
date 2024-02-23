@@ -1,13 +1,13 @@
-import sys
-import io
 import json
 from django.http import JsonResponse
 
 from django.shortcuts import render, redirect
 
 from Auth.models import CustomUser, Role
-from .models.models import Direction, Event, Participant, Task, Result
+from .models.models import Direction, Event, Participant, Task, TestData, Result
 from .forms import EventForm, PhoneNumberForm
+
+from .utils import execute_code
 
 def index(request): 
     if request.user.is_authenticated:
@@ -105,61 +105,74 @@ def event_form(request):
 
     return render(request, 'event_form.html', {'form': form})
 
-def event_task(request, **kwargs):
-    event = kwargs.get('event')
+def event_task(request, event, task=None):
     event = Event.objects.get(title=event)
     tasks = Task.objects.filter(event=event)
     participant = Participant.objects.get(participant=request.user, event=event)
-    task = kwargs.get('task', None)
-    
+
     try:
         results = Result.objects.filter(participant=participant, task__in=tasks)
-    except:
+    except Result.DoesNotExist:
         results = None
 
-    if not task:
-        task = tasks.exclude(id__in=results.values('task')).first() #Первое задание, которого нет в результатах
-
     result_titles = results.values_list('task__title', flat=True)
-    
-    task = Task.objects.get(title = task)
+
+    is_last = False
+
+    if tasks.count() - result_titles.count() <= 1:
+        is_last = True
+
+    if task == 'last':
+        last_task = tasks.exclude(id__in=results.values('task')).first()
+        task = last_task
+
+        context = {
+            'event': event,
+            'tasks': tasks,
+            'task': task,
+            'programming_languages': task.programming_languages.all(),
+            'results': result_titles,
+            'is_last': is_last
+        }
+
+        return redirect('event_task', event.title, task.title)
+    else:
+        task = Task.objects.get(title=task)
 
     context = {
-        'event' : event,
-        'tasks' : tasks,
-        'task' : task,
+        'event': event,
+        'tasks': tasks,
+        'task': task,
         'programming_languages': task.programming_languages.all(),
-        'results': result_titles
+        'results': result_titles,
+        'is_last': is_last
     }
-        
+
     return render(request, 'event/event_task.html', context)
 
 def run_code(request):
     if request.method == 'POST':
         data = json.loads(request.body)
+        task_id = data.get('task_id')
+        task = Task.objects.get(id = int(task_id))
         code = data.get('code', '')
 
-        # Создаем объект для перехвата вывода
-        stdout = io.StringIO()
-        sys.stdout = stdout  # Перенаправляем стандартный вывод в объект
-        try:
-            exec(code)  # Выполняем код
-            result = stdout.getvalue()  # Получаем результат из перехваченного вывода
-            save_result = data.get('save_result', None)  # Извлекаем параметр из данных запроса
-            if save_result != None:
-                event_title = data.get('event_title')
-                task_title = data.get('task_title')
-                event = Event.objects.get(title=event_title)
-                participant = Participant.objects.get(participant=request.user)
-                task = Task.objects.get(event=event, title=task_title)
-                Result.objects.create(participant=participant, task=task, result=result)
-                return JsonResponse({'redirect': 'event_last_task', 'event': event_title})
-            sys.stdout = sys.__stdout__  # Возвращаем стандартный вывод
-            return JsonResponse({'CodeResult': result})
+        test_data_list = TestData.objects.filter(task=task).first()
+        input_data = [x.strip() for x in test_data_list.input_data.split(", ")]
         
-        except Exception as e:
-            sys.stdout = sys.__stdout__  # Возвращаем стандартный вывод в случае исключения
-            return JsonResponse({'error': str(e)})
+        run_result, success = execute_code(code, input_data)
+
+        save_result = data.get('save_result', None)  # Извлекаем параметр из данных запроса
+        if save_result is not None:
+            event_title = data.get('event_title')
+            participant = Participant.objects.get(participant=request.user)
+            if success:
+                result = Result.objects.create(participant=participant, task=task, result=code)
+                result.right_check()
+                return JsonResponse({'redirect': 'event_last_task', 'event': event_title})
+            else:
+                return JsonResponse({'error': run_result})
+        return JsonResponse({'CodeResult': run_result})
     return JsonResponse({'error': 'Метод запроса не поддерживается'})
 
 # def save_task_result(request, event, task):
