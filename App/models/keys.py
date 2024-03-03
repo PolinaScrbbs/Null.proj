@@ -14,8 +14,3 @@ class Tag(models.Model):
     
 # class EventReward(Reward):
 #     pass
-
-
-    
-    
-    
