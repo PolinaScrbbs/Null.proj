@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% load static %}
+{% block content %}
+{% if is_reg == False %}
+<a href="{% url 'reg_event' event %}">
+    <div class="button">
+        Зарегистрироваться
+    </div>
+</a>
+{% else %}
+<a href="{% url 'event_task' event None %}">
+    <div class="button">
+        Перейти
+    </div>
+</a>
+{% endif %}
+{% endblock content %}

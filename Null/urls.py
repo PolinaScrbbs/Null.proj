@@ -10,4 +10,5 @@ urlpatterns = [
 urlpatterns += [
     path('',include('Auth.urls')),
     path('',include('App.urls')),
+    path('',include('Task.urls')),
 ]

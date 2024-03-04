@@ -6,12 +6,14 @@ from .forms import RegistrationForm
 
 form = RegistrationForm()
 
+#Auth
 urlpatterns = [
     path('registration/', registration, name='registration'),
-    path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
     path('logout', LogoutView.as_view(), name='logout')
 ]
 
+#Password_Reset
 urlpatterns += [
     path('reset_password/', auth_views.PasswordResetView.as_view(),
          name ='reset_password'),

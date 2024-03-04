@@ -1,10 +1,26 @@
 import os
 from pathlib import Path
-from djangocodemirror.settings import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# # Добавьте ваши настройки Celery
+# CELERY_BROKER_URL = 'amqp://guest:guest@localhost'  # URL для вашего брокера сообщений (RabbitMQ)
+# CELERY_RESULT_BACKEND = 'rpc://'  # URL для бекенда результатов задач
+
+# # Определите список приложений, содержащих задачи Celery
+# CELERY_IMPORTS = (
+#     'App.tasks',  # Замените 'App' на имя вашего приложения
+# )
+
+# # Настройки Celery
+# CELERY_TASK_TRACK_STARTED = True
+# CELERY_TASK_TIME_LIMIT = 30 * 60  # Ограничение времени выполнения задачи (в секундах), если нужно
+
+# # Задайте список принятых форматов контента
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -29,7 +45,7 @@ INSTALLED_APPS = [
     
     'Auth',
     'App',
-    
+    'Task'
 ]
 
 MIDDLEWARE = [
@@ -43,22 +59,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Null.urls'
-
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
 
 WSGI_APPLICATION = 'Null.wsgi.application'
 
@@ -91,6 +91,10 @@ EMAIL_PORT = 587 #Порт gmail
 EMAIL_USE_TLS = True #Использовать защищенное соединение
 EMAIL_HOST_USER = 'polinascaraboobs@gmail.com'
 EMAIL_HOST_PASSWORD = 'auqt begs eumx ttqo'
+
+# # Настройки Celery
+# CELERY_BROKER_URL = 'amqp://localhost'  # URL для подключения к RabbitMQ
+# CELERY_RESULT_BACKEND = 'rpc://'  # URL для хранения результатов выполнения задач
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -128,19 +132,49 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-# Base url to serve media files 
-MEDIA_URL = '/media/' 
- 
-# Path where media is stored 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#TEMPLATES, STATIC, MEDIA===============================================================================>
+MY_APPS = [
+    'Auth',
+    'App',
+    'Task'
+]
+
+TEMPLATES_URL = '/templates/'
+
+TEMPLATES = [ 
+    { 
+        'BACKEND': 'django.template.backends.django.DjangoTemplates', 
+        'DIRS': [ 
+            *[os.path.join(BASE_DIR, app, 'templates') for app in MY_APPS], 
+        ], 
+        'APP_DIRS': True, 
+        'OPTIONS': { 
+            'context_processors': [ 
+                'django.template.context_processors.debug', 
+                'django.template.context_processors.request', 
+                'django.contrib.auth.context_processors.auth', 
+                'django.contrib.messages.context_processors.messages', 
+            ], 
+        }, 
+    }, 
+]
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'staticNull'),
+    *[os.path.join(BASE_DIR, app, 'static') for app in MY_APPS]
+    ]
+
+
+MEDIA_URL = '/media/' 
+ 
+MEDIA_ROOT = [
+    os.path.join(BASE_DIR, 'media'),
+    *[os.path.join(BASE_DIR, app, 'media') for app in MY_APPS]
+]
