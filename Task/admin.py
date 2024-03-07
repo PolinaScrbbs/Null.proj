@@ -15,7 +15,12 @@ class TaskAdmin(admin.ModelAdmin):
 
 @admin.register(TestData)
 class TestDataAdmin(admin.ModelAdmin):
-    list_display = ('input_data', 'output_data')
+    list_display = ('id','task', 'get_task_condition', 'input_data', 'output_data')
+
+    def get_task_condition(self, obj):
+        return obj.task.condition
+
+    get_task_condition.short_description = 'Условие'
 
 @admin.register(TaskReward)
 class TaskRewardAdmin(admin.ModelAdmin):
@@ -28,6 +33,6 @@ class TaskCommentAdmin(admin.ModelAdmin):
 
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ('participant', 'task', 'is_right')
-    search_fields = ('participant', 'task', 'is_right')
+    list_display = ('user', 'task', 'is_right')
+    search_fields = ('user', 'task', 'is_right')
 

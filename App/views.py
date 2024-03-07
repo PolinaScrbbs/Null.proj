@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 from Auth.models import CustomUser, Role
 from Task.models.models import Task
@@ -8,9 +9,9 @@ from .models.models import Direction, Event, Participant
 
 from .forms import PhoneNumberForm
 
+# @login_required
 def index(request): 
     if request.user.is_authenticated:
-        
         directions = Direction.objects.all()
         events = Event.objects.all()
 
@@ -26,11 +27,15 @@ def index(request):
         }
 
         return render(request, 'event_catalog.html', context=context) 
-    else: 
-        return render(request, 'index.html')
+    else:
+        context = {
+            'title':'.Null'
+        }
+        return render(request, 'index.html', context)
 
 #EVENT==========================================================================================>
 
+@login_required
 def event_info(request, event):
     try:
         Participant.objects.get(event=Event.objects.get(title=event), user=CustomUser.objects.get(username=request.user))
@@ -45,6 +50,7 @@ def event_info(request, event):
 
     return render(request, 'event_info.html', context)
 
+@login_required
 def reg_event(request, event):
     user = CustomUser.objects.get(username=request.user)
     event = Event.objects.get(title=event)
@@ -60,7 +66,8 @@ def reg_event(request, event):
         return redirect('event_info', event = event.title)
 
 #PROFILE==========================================================================================>
-   
+
+@login_required 
 def profile(request, username):
     user = CustomUser.objects.get(username=username)
     role = Role.objects.get(id=user.role_id)
@@ -80,6 +87,7 @@ def profile(request, username):
 
     return render(request, 'profile.html', context=context)
 
+@login_required
 def upload_avatar(request):
     if request.method == 'POST' and request.FILES.get('file'):
         user = CustomUser.objects.get(full_name=request.user)

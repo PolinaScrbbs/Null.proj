@@ -28,7 +28,7 @@
                      </div>
                     {% else %}
                         <div class="header__img">
-                            <img src="{% static 'img/base/acc.png' %}" alt="" class="">
+                            <img src="{% static 'img/profile.png' %}" alt="" class="">
                         </div>
                     {% endif %}
                 </a>
@@ -65,7 +65,7 @@
 
     {%endblock content%}
 </body>
-    {%block scripts%}
+    {% comment %} {%block scripts%}
         <script src="{% static 'js/app.js' %}" > </script>
-    {%endblock scripts%}
+    {%endblock scripts%} {% endcomment %}
 </html>

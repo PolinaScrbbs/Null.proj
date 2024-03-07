@@ -31,7 +31,7 @@ class Event(models.Model):
         verbose_name = 'Событие'
         verbose_name_plural = 'События'
     
-    avatar = models.ImageField(upload_to='media/events', blank=True, verbose_name='Аватар')
+    avatar = models.ImageField(upload_to='events', blank=True, verbose_name='Аватар')
     direction = models.ForeignKey(Direction, on_delete=models.CASCADE, verbose_name='Направление')
     title = models.CharField(max_length=20, unique=True, verbose_name='Мероприятие')
     description = models.TextField(blank=True, null=True, verbose_name='Описание')
@@ -45,6 +45,9 @@ class Event(models.Model):
         self.number_of_participants = Participant.objects.filter(event=self).count()
         self.save()
 
+    def __str__(self):
+        return self.title
+
 class Participant(models.Model):
     class Meta:
         verbose_name = 'Участник'
@@ -54,7 +57,7 @@ class Participant(models.Model):
     user =  models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Участник', related_name='participant')
     
     def __str__(self):
-        return self.get_username()
+        return self.user.username
     
 class EventResult(models.Model):
     class Meta:

@@ -49,7 +49,7 @@ class Result(models.Model):
         verbose_name = 'Результат'
         verbose_name_plural = 'Результаты'
     
-    participant = models.ForeignKey(Participant, on_delete=models.CASCADE, verbose_name='Участник')
+    user = models.ForeignKey(Participant, on_delete=models.CASCADE, verbose_name='Участник')
     task = models.ForeignKey(Task, on_delete=models.CASCADE, verbose_name='Задание')
     result = models.TextField(blank=False, verbose_name='Результат')
     is_right = models.BooleanField(default=False, verbose_name='Правильность')
@@ -69,7 +69,7 @@ class Result(models.Model):
             reward_points = TaskReward.objects.get(task=self.task).ponts
 
             # Проверка на существование результатов участника, если нет, то создаём
-            event_result, created = EventResult.objects.get_or_create(participant=self.participant)
+            event_result, created = EventResult.objects.get_or_create(participant=self.user)
 
             # event_result.solved_count += 1
             event_result.score += reward_points

@@ -733,9 +733,9 @@ body {
   color: #efefef;
   min-width: 400px;
 }
-.profile__img {
+/* .profile__img {
 
-}
+} */
 .profile__img img{
    width: 200px;
   aspect-ratio: 1; /* will make width equal to height (500px container) */
@@ -894,9 +894,9 @@ button:disabled{
 .btn_back{
   display: inline;
 }
-.header__img{
+/* .header__img{
 
-}
+} */
 
 .header__img img{
    width: 40px;

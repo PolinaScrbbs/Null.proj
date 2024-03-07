@@ -32,7 +32,7 @@
                 {% if event.avatar %}
                     <img src="{{ event.avatar.url }}" alt="" class="card__img">
                 {% else %}
-                    <img src="{% static 'null.png' %}" alt="" class="card__img">
+                    <img src="{% static 'img/null.png' %}" alt="" class="card__img">
                 {% endif %}
                 <div class="card__info">
                     {% if event.title in registered_events %}

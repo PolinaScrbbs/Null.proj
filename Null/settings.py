@@ -115,6 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 #Перенаправление после логина
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'login'
 
@@ -163,18 +164,14 @@ TEMPLATES = [
         }, 
     }, 
 ]
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticNull'),
+    os.path.join(BASE_DIR, "static"),
     *[os.path.join(BASE_DIR, app, 'static') for app in MY_APPS]
     ]
 
-
 MEDIA_URL = '/media/' 
  
-MEDIA_ROOT = [
-    os.path.join(BASE_DIR, 'media'),
-    *[os.path.join(BASE_DIR, app, 'media') for app in MY_APPS]
-]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+

@@ -131,7 +131,6 @@
 </body>
 
 <script>
-    
     var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
     theme: 'null',
     mode: 'python',
@@ -149,7 +148,19 @@ editor.on("change", function(cm, change) {
     }
 });
 
-function getCSRFToken() {
+function changeMode(language) {
+    language = language.toLowerCase();
+    console.log(language)
+    editor.setOption("mode", language);
+}
+ 
+</script>
+
+<script src="{% static 'js/list_switching.js' %}"></script>
+<script src="{% static 'js/reset.js' %}"></script>
+<!-- <script src="{% static 'js/run_code.js' %}"></script> -->
+<script>
+    function getCSRFToken() {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         var cookies = document.cookie.split(';');
@@ -165,19 +176,73 @@ function getCSRFToken() {
     return cookieValue;
 }
 
-function changeMode(language) {
-    language = language.toLowerCase();
-    console.log(language)
-    editor.setOption("mode", language);
-}
- 
-</script>
+const csrftoken = getCSRFToken(); 
+const run_btn = document.getElementById('runButton');
+const result_btn = document.getElementById('resultBotton');
 
-<script src="{% static 'js/list_switching.js' %}"></script>
-<script src="{% static 'js/reset.js' %}"></script>
-<script> const csrftoken = getCSRFToken(); // Получение CSRF токена </script>
-<script src="{% static 'js/run_code.js' %}"></script>
-<script src="{% static 'js/save_result.js' %}"></script>
+run_btn.addEventListener('click', () => {
+    runCode();
+});
+
+
+if (result_btn) {
+    result_btn.addEventListener('click', () => {
+        saveResult();
+    });
+}
+
+function runCode() {
+    var code = editor.getValue();
+    var task_id = "{{ task.id }}";
+
+    fetch('/run_code/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify({ 
+            code: code, 
+            task_id: task_id
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('output').innerText = data.CodeResult;
+        document.getElementById('btn_output_data').click();
+    })
+    .catch(error => console.error('Ошибка:', error));
+}
+
+function saveResult() {
+    var code = editor.getValue();
+    var save_result = "True";
+    var event_title = "{{ event }}";
+    var task_id = "{{ task.id }}";
+
+    fetch('/save_result/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify({
+            code: code,
+            save_result: save_result,
+            event_title: event_title,
+            task_id: task_id
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        const event = data.event;
+        const task = data.task
+        const url = '/' + event + '/' + task + '/';
+        window.location.href = url;
+    })
+    .catch(error => console.error('Ошибка:', error));
+}
+</script>
 <script>
     $(document).ready(function(){
         $('.dropdown-item').on('click', function(){

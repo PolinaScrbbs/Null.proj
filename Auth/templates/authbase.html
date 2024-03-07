@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <title>{{title}}</title>
+</head>
+
+<body>
+    <div class="login">
+        <div class="login__card">
+            <div class="login__logo">
+                <img src="{% static 'img/Logo.png' %}" alt="">
+            </div>
+            <div class="login__form">
+                {% block form %} {% endblock form %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

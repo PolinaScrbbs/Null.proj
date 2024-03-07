@@ -22,10 +22,13 @@ def event_task(request, event, task):
 
     result_titles = results.values_list('task__title', flat=True)
 
-    is_last = False
+    is_last = None
 
-    if tasks.count() - result_titles.count() <= 1:
-        is_last = True
+    try:
+        if tasks.count() - result_titles.count() <= 1:
+            is_last = True
+    except:
+        is_last = False
 
     if task == 'None':
         task = get_next_task(0)
@@ -52,7 +55,7 @@ def event_task(request, event, task):
         'is_last': is_last
     }
 
-    return render(request, 'Task/event_task.html', context)
+    return render(request, 'event_task.html', context)
 
 def save_result(request):
     if request.method == 'POST':
