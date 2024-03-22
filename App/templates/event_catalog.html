@@ -53,8 +53,228 @@
             </div>
         </div>
     </header>
-    <div class="eventNav">
+    <div class="eventNav container">
+        <div class="eventNav__search">
+            <img src="static\img\contests\search.svg" alt="">
+            <input type="text" placeholder="Название мероприятия или автор" class="eventNav__input">
+        </div>  
+        <div class="eventNav__mark">
+            <label>Активные</label>
+            <input type="checkbox">
+        </div>
+        <div class="eventNav__list">
+            Любое направление ⭣
+        </div>
+        <div class="eventNav__mark">
+            <label>Активные</label>
+            <input type="checkbox">
+        </div>
+        <button class="eventNav__btn btn">
+            Искать
+        </button>
+    </div>
 
+    <div class="events">
+        <div class="events__container container">
+            <div class="events__title">Мероприятия</div>
+            <div class="events__statuses">
+                <div class="events__status active-status">Все мероприятия</div>
+                <div class="events__status">Зарегистрированные</div>
+                <div class="events__status">Ближайшие</div>
+                <div class="events__status">В этом месяце</div>
+            </div>
+            <div class="eventCards">
+                <div class="eventCards__card">
+                    <div class="eventCards__content">
+                        <div class="eventCards__info">
+                            <div class="eventCards__title">
+                                Заголовок
+                            </div>
+                            <div class="eventCards__description">
+                                Описание
+                            </div>
+                        </div>
+                        <div class="eventCards__img">
+                            <img src="static\img\contests\profile.png" alt="">
+                        </div>
+                    </div>
+                    <div class="eventCards__content">
+                        <div class="eventCards__tags">
+                            Python
+                            PySnake
+                        </div>
+                        <div class="eventCards__data">
+                            <div class="eventCards__score">230 очков</div>
+                            <div class="eventCards__lvl">7LV</div>
+                        </div>
+                    </div>
+                    <div class="eventCards__btn">
+                        <button class="btn">Участвовать</button>
+                    </div>
+                    <div class="eventCards__stat">
+                        <div class="eventCards__count">100</div>
+                        <div class="eventCards__role">Организатор</div>
+                    </div>
+                </div>
+                <div class="eventCards__card">
+                    <div class="eventCards__content">
+                        <div class="eventCards__info">
+                            <div class="eventCards__title">
+                                Заголовок
+                            </div>
+                            <div class="eventCards__description">
+                                Описание
+                            </div>
+                        </div>
+                        <div class="eventCards__img">
+                            <img src="static\img\contests\profile.png" alt="">
+                        </div>
+                    </div>
+                    <div class="eventCards__content">
+                        <div class="eventCards__tags">
+                            Python
+                            PySnake
+                        </div>
+                        <div class="eventCards__data">
+                            <div class="eventCards__score">230 очков</div>
+                            <div class="eventCards__lvl">7LV</div>
+                        </div>
+                    </div>
+                    <div class="eventCards__btn">
+                        <button class="btn">Участвовать</button>
+                    </div>
+                    <div class="eventCards__stat">
+                        <div class="eventCards__count">100</div>
+                        <div class="eventCards__role">Организатор</div>
+                    </div>
+                </div>
+                <div class="eventCards__card">
+                    <div class="eventCards__content">
+                        <div class="eventCards__info">
+                            <div class="eventCards__title">
+                                Заголовок
+                            </div>
+                            <div class="eventCards__description">
+                                Описание
+                            </div>
+                        </div>
+                        <div class="eventCards__img">
+                            <img src="static\img\contests\profile.png" alt="">
+                        </div>
+                    </div>
+                    <div class="eventCards__content">
+                        <div class="eventCards__tags">
+                            Python
+                            PySnake
+                        </div>
+                        <div class="eventCards__data">
+                            <div class="eventCards__score">230 очков</div>
+                            <div class="eventCards__lvl">7LV</div>
+                        </div>
+                    </div>
+                    <div class="eventCards__btn">
+                        <button class="btn">Участвовать</button>
+                    </div>
+                    <div class="eventCards__stat">
+                        <div class="eventCards__count">100</div>
+                        <div class="eventCards__role">Организатор</div>
+                    </div>
+                </div>
+                <div class="eventCards__card">
+                    <div class="eventCards__content">
+                        <div class="eventCards__info">
+                            <div class="eventCards__title">
+                                Заголовок
+                            </div>
+                            <div class="eventCards__description">
+                                Описание
+                            </div>
+                        </div>
+                        <div class="eventCards__img">
+                            <img src="static\img\contests\profile.png" alt="">
+                        </div>
+                    </div>
+                    <div class="eventCards__content">
+                        <div class="eventCards__tags">
+                            Python
+                            PySnake
+                        </div>
+                        <div class="eventCards__data">
+                            <div class="eventCards__score">230 очков</div>
+                            <div class="eventCards__lvl">7LV</div>
+                        </div>
+                    </div>
+                    <div class="eventCards__btn">
+                        <button class="btn">Участвовать</button>
+                    </div>
+                    <div class="eventCards__stat">
+                        <div class="eventCards__count">100</div>
+                        <div class="eventCards__role">Организатор</div>
+                    </div>
+                </div>
+            </div>
+            <div class="populars container">
+                <div class="populars__name">Часто ищут</div>
+                <div class="populars__cards">
+                    <div class="populars__card">
+                        <div class="populars__top">
+                            <div class="populars__title">Python</div>
+                            <img src="static\img\contests\profile.png" class="populars__img">
+                        </div>
+                        <div class="populars__subtitle">Программирование</div>
+                    </div>
+                    <div class="populars__card">
+                        <div class="populars__top">
+                            <div class="populars__title">Python</div>
+                            <img src="static\img\contests\profile.png" class="populars__img">
+                        </div>
+                        <div class="populars__subtitle">Программирование</div>
+                    </div>
+                    <div class="populars__card">
+                        <div class="populars__top">
+                            <div class="populars__title">Python</div>
+                            <img src="static\img\contests\profile.png" class="populars__img">
+                        </div>
+                        <div class="populars__subtitle">Программирование</div>
+                    </div>
+                    <div class="populars__card">
+                        <div class="populars__top">
+                            <div class="populars__title">Python</div>
+                            <img src="static\img\contests\profile.png" class="populars__img">
+                        </div>
+                        <div class="populars__subtitle">Программирование</div>
+                    </div>
+                    <div class="populars__card">
+                        <div class="populars__top">
+                            <div class="populars__title">Python</div>
+                            <img src="static\img\contests\profile.png" class="populars__img">
+                        </div>
+                        <div class="populars__subtitle">Программирование</div>
+                    </div>
+                    <div class="populars__card">
+                        <div class="populars__top">
+                            <div class="populars__title">Python</div>
+                            <img src="static\img\contests\profile.png" class="populars__img">
+                        </div>
+                        <div class="populars__subtitle">Программирование</div>
+                    </div>
+                    <div class="populars__card">
+                        <div class="populars__top">
+                            <div class="populars__title">Python</div>
+                            <img src="static\img\contests\profile.png" class="populars__img">
+                        </div>
+                        <div class="populars__subtitle">Программирование</div>
+                    </div>
+                    <div class="populars__card">
+                        <div class="populars__top">
+                            <div class="populars__title">Python</div>
+                            <img src="static\img\contests\profile.png" class="populars__img">
+                        </div>
+                        <div class="populars__subtitle">Программирование</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

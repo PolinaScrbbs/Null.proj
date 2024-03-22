@@ -1,8 +1,40 @@
 
-{% extends 'newBase.html' %} 
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
 
 {% block content %}
+
+<header class="header container">
+    <div class="header__link header__logo">
+        <img src="{% static 'img/index/logo.png' %}" alt="">
+    </div>
+    <div class="header__btns">
+        <a href="{% url 'login' %}">
+            <button class="header__loginBtn btn">Войти</button>
+        </a>
+        <a href="{% url 'registration' %}">
+            <button class="header__regBtn btn">Присоединиться</button>
+        </a>
+    </div>
+    <div class="burger-menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="burger-menu">
+        <div class="burger-content">
+            <div class="header__link header__logo">
+                <img src="{% static 'img/index/logo.png' %}" alt="">
+            </div>
+            <a href="{% url 'login' %}">
+                <button class="header__loginBtn btn">Войти</button>
+            </a>
+            <a href="{% url 'registration' %}">
+                <button class="header__regBtn btn">Присоединиться</button>
+            </a>
+        </div>
+    </div>
+</header>
     <main>
         <div class="intro">
             <div class="intro__container container">
