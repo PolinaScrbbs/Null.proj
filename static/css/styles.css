@@ -1289,3 +1289,88 @@ img {
 .populars__subtitle {
     font-size: 1.2rem;
 }
+
+/*profile*/
+
+.profile {
+    display: flex;
+    margin-bottom: 10rem;
+    color: #FFF;
+    font-size: 1.5rem;
+}
+.container {
+}
+.profile__data {
+   flex: 0 0 22%;
+}
+.profile__avatar {
+    max-width: 15vw;
+    margin-bottom: 10px;
+}
+.profile__avatar img{
+    border-radius: 10px;
+
+}
+.profile__name {
+    margin-bottom: 15px;
+}
+.profile__email{
+    margin-bottom: 20px;
+}
+.profile__btn {
+    
+}
+.btn {
+}
+.profile__cards {
+
+}
+.profileCards__suptitle{
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+}
+.profileCards__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.profileCards__card {
+    display: flex;
+    flex: 0 0 48%;
+    height: 6rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+}
+.profileCards__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+
+}
+.profileCards__stat{
+    display: flex;
+    justify-content: space-between;
+}
+.profileCards__direct {
+    color: #FFF;
+    font-size: 1.3rem;
+
+}
+.profileCards__count{
+    color: #FFD600;
+    font-size: 1.2rem;
+}
+.profileCards__title {
+}
+.profileCards__time {
+   
+    font-size: 1.2rem;
+    color: #8200AF;
+}
+.profileCards_img {
+    width: 5vw;
+}
