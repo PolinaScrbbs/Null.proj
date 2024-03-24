@@ -100,6 +100,7 @@ h6 {
 html,
 body {
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 body {
@@ -1373,4 +1374,190 @@ img {
 }
 .profileCards_img {
     width: 5vw;
+}
+
+/*========================*/
+
+.tabcontent {
+    display: none;
+    border: 1px solid #fff;
+    padding: 25px;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
+.tablink {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.tabcontent__task {
+    font-size: 1.3rem;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.322);
+}
+
+.tabcontent__task:not(:last-child){
+    margin-bottom: 2rem;
+}
+.tablink.active {
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+
+.toolbar {
+    color: #fff;
+}
+.toolbar__container {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.toolbar__title {
+    margin-bottom: 2.2rem;
+    font-size: 2rem;
+}
+.toolbar__tabs {
+    flex: 0 0 30%;
+}
+@media (max-width: 991px) {
+   
+}
+.tablink {
+}
+.tabcontent {
+}
+
+.toolbar__languages {
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+.languages__btn {
+    padding: 10px 25px;
+    border: 1px solid rgba(255, 255, 255, 0.514);
+    background: transparent;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
+.languages__btn:hover{
+    background: #fff;
+    color: #000;
+    transition: all .5s ease;
+}
+.languages__content {
+    display: flex;
+    position: absolute;
+    right: 0;
+    color: #fff;
+    background-color: transparent;
+    z-index: -1;
+    transition: left 0.5s ease;
+    top: 60px;
+    left: 80%; 
+    opacity: 0;
+   
+}
+.show {
+    left: 40%; 
+    opacity: 1;
+    z-index: 1;
+}
+.languages__content button {
+    color: #fff;
+    background: transparent;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: left 0.5s ease;
+    border: 1px solid rgba(255, 255, 255, 0.514);
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.languages__content button:hover{
+    background: #fff;
+    color: #000;
+    transition: all .5s ease;
+}
+.toolbar__area {
+    flex: 0 0 65%;
+}
+.toolbar__textarea{
+    border: 1px solid #fff;
+    background: transparent;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    padding: 20px;
+    width: 100%;
+    height: 30vw;
+    resize: none;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+.toolbar__btns {
+    display: flex;
+}
+.toolbar__btns:first-child {
+    justify-content: space-between;
+}
+.toolbar__btn {
+    background: #10011C;
+    padding: 10px 25px;
+    justify-content: space-between;
+    color: #fff;
+    transition: all .2s ease;
+}
+.toolbar__btn:hover{
+    background: #0b0014;
+    transition: all .2s ease;
+}
+.toolbar__btn:not(:last-child){
+    margin-right: 20px;
+}
+.toolbar__buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.toolbar__button {
+    border: 1px solid #fff;
+    border-radius: 5px;
+    background: transparent;
+    padding: 10px 30px;
+    align-items: center;
+    color: #fff;
+    transition: all .5s ease;
+
+}
+.toolbar__button:hover{
+    background: #fff;
+    color: #000;
+    transition: all .5s ease;
+}
+.toolbar__button:not(:last-child){
+    margin-right: 20px;
+}
+.CodeMirror{
+    height: 30vw;
+}
+.CodeMirror-scroll{
+    background: #00010B;
+    border: 1px solid #fff;
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-bottom: 20px;
+    height: 99% !important;
+    border-radius: 5px;
+}
+.CodeMirror-scroll::-webkit-scrollbar {
+    display: none;
+}
+.CodeMirror-gutter{
+    background: #00010B;
 }

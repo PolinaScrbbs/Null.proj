@@ -20,51 +20,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/python/python.js"></script> <!-- Python -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/clike/clike.min.js"></script> <!-- Java, С++, C#, C -->
 
-    <title>Document</title>
+    <title>выполняем тут задания мы</title>
 </head>
 <body>
-    <h1>{{ event }}</h1>
-    <div class="container p-0 m-0">
-        <div class="row">
-            <div class="col-2">
-                <ul class="list-group">
-                    {% for cycletask in tasks %}
-                        {% if cycletask.title in results %}
-                            <li class="list-group-item list-group-item-dark">{{ cycletask.title }}</li>
-                        {% elif cycletask.id == task.id %}
-                            <a href="{% url 'event_task' event.title cycletask.title %}">
-                                <li class="list-group-item active" aria-current="true">{{ cycletask.title }}</li>
-                            </a>  
-                        {% else %}
-                            <a href="{% url 'event_task' event.title cycletask.title %}">
-                                <li class="list-group-item">{{ cycletask.title }}</li> 
-                            </a>
-                        {% endif %}
-                    {% endfor %}
-                </ul> 
-            </div>
-            <div class="col-9">
-                <div class="container mt-5">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            Python
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {% for programming_language in programming_languages %}
-                                <li><a class="dropdown-item" href="#" onclick="changeMode('{{ programming_language }}')">{{ programming_language }}</a></li>
-                            {% endfor %}
-                        </ul>
+    <div class="">
+        <div class="toolbar">
+            <div class="toolbar__container container">
+                <div class="toolbar__title">Задание</div>
+                <div class="toolbar__tabs">
+                    <button class="tablink" data-tab="tab1">Задание</button>
+                    <button class="tablink" data-tab="tab2">Выходные данные</button>
+                    <button class="tablink" data-tab="tab3">Условия</button>
+                
+                    <div id="tab1" class="tabcontent">
+                        Content for Tab 1
+                    </div>
+                    <div id="tab2" class="tabcontent">
+                        Content for Tab 2
+                    </div>
+                    <div id="tab3" class="tabcontent">
+                        Content for Tab 3
                     </div>
                 </div>
-                <form method="post" action="{% url 'save_task_result' event.title task.title %}">
-                    {% csrf_token %}
-                    <div class="form-floating">
-                        <textarea id = "code"></textarea>
-                        <button onclick="runCode()">Run Code</button>
-                        <div id="output"></div>
-                    </div>
-                    <button type="submit" class="btn btn-outline-success">Отправить</button>
-                </form>
             </div>
         </div>
     </div>
@@ -86,12 +63,6 @@
         editor.setOption("mode", language);
     }
 </script>
-<script>
-    $(document).ready(function(){
-        $('.dropdown-item').on('click', function(){
-            var selectedOption = $(this).text();
-            $('#dropdownMenuButton').text(selectedOption);
-        });
-    });
+<script src="static/js/app.js">
 </script>
 </html>
