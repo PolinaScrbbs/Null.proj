@@ -1,58 +1,7 @@
+{% extends "base/mainBase.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <title>Contests</title>
-</head>
-
-<body>
-
-    <header class="header container">
-        <div class="header__link header__logo">
-            <img src="{% static 'img/index/logo.png' %}" alt="">
-        </div>
-        <div class="header__btns">
-            <a class="header__btn" href="#">
-               Организация
-            </a>
-            <div class="header__searchContainer">
-                <img src="{% static 'img/Contests/search.svg' %}" alt="">
-                <input class="header__search" type="text" placeholder="Поиск">
-                <span>| >_</span>
-            </div>
-            <div class="header__info">
-
-                <img src="{% static 'img/index/logo.png' %}" class="header__profile" alt="">
-
-            </div>
-        </div>
-        <div class="burger-menu-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="burger-menu">
-            <div class="burger-content">
-                <a class="header__btn" href="#">
-                    Организация
-                 </a>
-                <div class="header__searchContainer">
-                    <img src="{% static 'img/Contests/search.svg' %}" alt="">
-                    <input class="header__search" type="text" placeholder="Поиск">
-                    <span>| >_</span>
-                </div>
-                <a href="#">
-
-                    <img src="{% static 'img/index/logo.png' %}" class="header__profile" alt="">
-
-                </a>
-            </div>
-        </div>
-    </header>
+{% block content %}
     <div class="eventNav container">
         <div class="eventNav__search">
             <img src="static\img\contests\search.svg" alt="">
@@ -84,134 +33,56 @@
                 <div class="events__status">В этом месяце</div>
             </div>
             <div class="eventCards">
-                <div class="eventCards__card">
-                    <div class="eventCards__content">
-                        <div class="eventCards__info">
-                            <div class="eventCards__title">
-                                Заголовок
+                {% for event in events %}
+                    <div class="eventCards__card">
+                        <div class="eventCards__content">
+                            <div class="eventCards__info">
+                                <div class="eventCards__title">
+                                    {{event.title}}
+                                </div>
+                                <div class="eventCards__description">
+                                    {{event.description}}
+                                </div>
                             </div>
-                            <div class="eventCards__description">
-                                Описание
+                            {% if event.avatar %}
+                                <div class="eventCards__img">
+                                    <img src="{{ event.avatar.url }}" alt="">
+                                </div>
+                            {% else %}
+                            <div class="eventCards__img">
+                                <img src="{% static "img/null.png" %}" alt="Аватарка">
                             </div>
+                            {% endif %}
                         </div>
-                        <div class="eventCards__img">
-                            <img src="static\img\contests\profile.png" alt="">
-                        </div>
-                    </div>
-                    <div class="eventCards__content">
-                        <div class="eventCards__tags">
-                            Python
-                            PySnake
-                        </div>
-                        <div class="eventCards__data">
-                            <div class="eventCards__score">230 очков</div>
-                            <div class="eventCards__lvl">7LV</div>
-                        </div>
-                    </div>
-                    <div class="eventCards__btn">
-                        <button class="btn">Участвовать</button>
-                    </div>
-                    <div class="eventCards__stat">
-                        <div class="eventCards__count">100</div>
-                        <div class="eventCards__role">Организатор</div>
-                    </div>
-                </div>
-                <div class="eventCards__card">
-                    <div class="eventCards__content">
-                        <div class="eventCards__info">
-                            <div class="eventCards__title">
-                                Заголовок
-                            </div>
-                            <div class="eventCards__description">
-                                Описание
+                        <div class="eventCards__content">
+                            {% for tag in event.tag.all %}
+                                <div class="eventCards__tags">
+                                    Тег: {{tag}}
+                                </div>
+                            {% endfor %}
+                            <div class="eventCards__data">
+                                <div class="eventCards__score">230 очков</div>
+                                <div class="eventCards__lvl">7LV</div>
                             </div>
                         </div>
-                        <div class="eventCards__img">
-                            <img src="static\img\contests\profile.png" alt="">
+                        
+                        <div class="eventCards__btn">
+                            {% if event.title in registered_events %}
+                                <a href="{% url "event_task" event.title None%}">
+                                    <button class="btn">Перейти</button>
+                                </a>
+                            {% else %}
+                                <a href="{% url "reg_event" event.title %}">
+                                    <button class="btn">Участвовать</button>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="eventCards__stat">
+                            <div class="eventCards__count">Количество участников: {{event.number_of_participants}}</div>
+                            <div class="eventCards__role">Организатор</div>
                         </div>
                     </div>
-                    <div class="eventCards__content">
-                        <div class="eventCards__tags">
-                            Python
-                            PySnake
-                        </div>
-                        <div class="eventCards__data">
-                            <div class="eventCards__score">230 очков</div>
-                            <div class="eventCards__lvl">7LV</div>
-                        </div>
-                    </div>
-                    <div class="eventCards__btn">
-                        <button class="btn">Участвовать</button>
-                    </div>
-                    <div class="eventCards__stat">
-                        <div class="eventCards__count">100</div>
-                        <div class="eventCards__role">Организатор</div>
-                    </div>
-                </div>
-                <div class="eventCards__card">
-                    <div class="eventCards__content">
-                        <div class="eventCards__info">
-                            <div class="eventCards__title">
-                                Заголовок
-                            </div>
-                            <div class="eventCards__description">
-                                Описание
-                            </div>
-                        </div>
-                        <div class="eventCards__img">
-                            <img src="static\img\contests\profile.png" alt="">
-                        </div>
-                    </div>
-                    <div class="eventCards__content">
-                        <div class="eventCards__tags">
-                            Python
-                            PySnake
-                        </div>
-                        <div class="eventCards__data">
-                            <div class="eventCards__score">230 очков</div>
-                            <div class="eventCards__lvl">7LV</div>
-                        </div>
-                    </div>
-                    <div class="eventCards__btn">
-                        <button class="btn">Участвовать</button>
-                    </div>
-                    <div class="eventCards__stat">
-                        <div class="eventCards__count">100</div>
-                        <div class="eventCards__role">Организатор</div>
-                    </div>
-                </div>
-                <div class="eventCards__card">
-                    <div class="eventCards__content">
-                        <div class="eventCards__info">
-                            <div class="eventCards__title">
-                                Заголовок
-                            </div>
-                            <div class="eventCards__description">
-                                Описание
-                            </div>
-                        </div>
-                        <div class="eventCards__img">
-                            <img src="static\img\contests\profile.png" alt="">
-                        </div>
-                    </div>
-                    <div class="eventCards__content">
-                        <div class="eventCards__tags">
-                            Python
-                            PySnake
-                        </div>
-                        <div class="eventCards__data">
-                            <div class="eventCards__score">230 очков</div>
-                            <div class="eventCards__lvl">7LV</div>
-                        </div>
-                    </div>
-                    <div class="eventCards__btn">
-                        <button class="btn">Участвовать</button>
-                    </div>
-                    <div class="eventCards__stat">
-                        <div class="eventCards__count">100</div>
-                        <div class="eventCards__role">Организатор</div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
             <div class="populars container">
                 <div class="populars__name">Часто ищут</div>
@@ -276,8 +147,4 @@
             </div>
         </div>
     </div>
-</body>
-
-<script src="static/js/app.js"></script>
-
-</html>
+{% endblock content %}

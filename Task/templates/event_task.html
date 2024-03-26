@@ -1,14 +1,8 @@
+{% extends "base/mainBase.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+{% block styles %}
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.js"></script>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
@@ -44,10 +38,9 @@
     <script src="{% static 'codemirror/modes/python/python.js' %}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/clike/clike.min.js"></script> <!-- Java, С++, C#, C -->
+{% endblock styles %}
 
-    <title>Document</title>
-</head>
-<body>
+{% block content %}
     <div class="toolbar container">
         <div class="toolbar__title">Событие: {{ event }}</div>
 
@@ -58,18 +51,31 @@
                 <button class="tablink" data-tab="tab3">Условия</button>
             
                 <div id="tab1" class="tabcontent" style="display: block">
-                    <div class="tabcontent__task">
-                        Задание
-                    </div>
-                    <div class="tabcontent__task">
-                        Задание
-                    </div>
+                    {% for taskList in tasks %}
+                        {% if taskList.title in results %} {% comment %} Если выполнено {% endcomment %}
+                            <div class="tabcontent__task" id="{{taskList.id}}">
+                                {{ taskList.title }}
+                            </div>
+                        {% elif taskList.title == task.title %} {% comment %} Задание, которые ты ща делаешь {% endcomment %}
+                            <a href="{% url 'event_task' event.title taskList.title %}">
+                                <div class="tabcontent__task" id="{{taskList.id}}">
+                                    {{ taskList.title }}
+                                </div>
+                            </a>
+                        {% else %} {% comment %} Стандарт {% endcomment %}
+                            <a href="{% url 'event_task' event.title taskList.title %}">
+                                <div class="tabcontent__task" id="{{taskList.id}}">
+                                    {{ taskList.title }}
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <div id="tab2" class="tabcontent">
-                    виходные данные
+                    <span id="output"></span>
                 </div>
-                <div id="tab3" class="tabcontent">
-                    хз че тут ваще у нас
+                <div id="tab3" class="tabcontent" readonly>
+                    {{task.condition}}
                 </div>
             </div>
             <div class="toolbar__area">
@@ -88,22 +94,31 @@
 
                 <div class="toolbar__buttons">
                     <div class="toolbar__btns">
-                        <button class="toolbar__btn">Пропустить</button>
+                        {% if next_task != None %}
+                            <a href="{% url 'event_task' event.title next_task.title %}">
+                                <button class="toolbar__btn">Пропустить</button>
+                            </a>
+                        {% endif %}
                         <button class="toolbar__btn">Комментарии</button>
                         <button class="toolbar__btn">Сбросить</button>
                     </div>
 
                     <div class="toolbar__btns">
-                        <button class="toolbar__button">Тест</button>
-                        <button class="toolbar__button">Отправить</button>
+                        <button class="toolbar__button" id="runButton">Тест</button>
+                        {% if is_last == False %}
+                            <button class="toolbar__button" id="resultBotton">Отправить</button>
+                        {% else %}
+                            <button class="toolbar__button" id="resultBotton">Завершить</button>
+                        {% endif %}
                     </div>
                 </div>
                 
             </div>
         </div>
     </div>
-</body>
+{% endblock content %}
 
+{% block scripts %}
 <script>
     var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
     theme: 'null',
@@ -132,7 +147,7 @@ function changeMode(language) {
 
 <script src="{% static 'js/list_switching.js' %}"></script>
 <script src="{% static 'js/reset.js' %}"></script>
-<script src="/static/js/app.js"></script>
+<script src="{% static "app.js" %}"></script>
 <!-- <script src="{% static 'js/run_code.js' %}"></script> -->
 <script>
     function getCSRFToken() {
@@ -226,5 +241,4 @@ function saveResult() {
         });
     });
 </script>
-
-</html>
+{% endblock scripts %}

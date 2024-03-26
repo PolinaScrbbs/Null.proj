@@ -12,16 +12,14 @@ from .forms import PhoneNumberForm
 # @login_required
 def index(request): 
     if request.user.is_authenticated:
-        directions = Direction.objects.all()
         events = Event.objects.all()
 
         participant = Participant.objects.filter(user = request.user)
-        participate_in =  participant #Список ивентов в которых участвует юзер
+        participate_in =  participant
         registered_events = participate_in.values_list('event__title', flat=True)
 
         context = {
-            'title': 'Главная страница', 
-            'directions': directions, 
+            'title': 'Мероприятия',
             'events': events,
             'registered_events': registered_events
         }
@@ -90,7 +88,7 @@ def profile(request, username):
 @login_required
 def upload_avatar(request):
     if request.method == 'POST' and request.FILES.get('file'):
-        user = CustomUser.objects.get(full_name=request.user)
+        user = CustomUser.objects.get(username=request.user)
         if user.is_authenticated:
             uploaded_file = request.FILES['file']
             user.photo = uploaded_file

@@ -1,60 +1,122 @@
-{% extends 'newBase.html' %} 
+{% extends 'base/mainBase.html' %} 
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 {% block content %}
-<div class="profile container">
-   <div class="profile__data">
-    <div class="profile__avatar">
-        <img src="/static/img/contests/profile.png" alt="">
+    <div class="profile container">
+    <div class="profile__data">
+        <div class="profile__avatar">
+            {% if user.photo %}
+                <input type="file" id="fileInput" style="display:none;">
+                <label for="fileInput" class="file-label">
+                    <img src="{{ user.photo.url }}" alt="" class="profile__img">
+                </label>
+            {% else %}
+                <input type="file" id="fileInput" style="display:none;">
+                <label for="fileInput" class="file-label">
+                    <img src="{% static "img/profile.png" %}" alt="">
+                </label>
+            {% endif %}
+        </div>
+        <div class="profile__name"> <span>@</span>{{user.full_name}}</div>  
+        <div class="profile__email">{{user.email}}</div>  
+        <button class="profile__btn btn">Редактировать профиль</button>
     </div>
-    <div class="profile__name"> <span>@</span>{{user.full_name}}</div>  
-    <div class="profile__email">{{user.email}}</div>  
-    <button class="profile__btn btn">Редактировать профиль</button>
-   </div>
-   <div class="profileCards">
-    <div class="profileCards__suptitle">Расписание</div>
-    <div class="profileCards__container">
-        <div class="profileCards__card">
-            <div class="profileCards__info">
-                <div class="profileCards__direct">Направление</div>
-                <div class="profileCards__title">Заголовок</div>
+    <div class="profileCards">
+        <div class="profileCards__suptitle">Расписание</div>
+        <div class="profileCards__container">
+            <div class="profileCards__card">
+                <div class="profileCards__info">
+                    <div class="profileCards__direct">Направление</div>
+                    <div class="profileCards__title">Заголовок</div>
 
+                </div>
+                <div class="profileCards__info">
+                    <div class="profileCards__time">00:57:33</div>
+                    <div class="profileCards__count">00/120</div>
+                </div>
+                <img class="profileCards_img" src="/static/img/contests/profile.png" alt="">
             </div>
-            <div class="profileCards__info">
-                <div class="profileCards__time">00:57:33</div>
-                <div class="profileCards__count">00/120</div>
-            </div>
-            <img class="profileCards_img" src="/static/img/contests/profile.png" alt="">
-        </div>
-        <div class="profileCards__card">
-            <div class="profileCards__info">
-                <div class="profileCards__direct">Направление</div>
-                <div class="profileCards__title">Заголовок</div>
+            <div class="profileCards__card">
+                <div class="profileCards__info">
+                    <div class="profileCards__direct">Направление</div>
+                    <div class="profileCards__title">Заголовок</div>
 
+                </div>
+                <div class="profileCards__info">
+                    <div class="profileCards__time">00:57:33</div>
+                    <div class="profileCards__count">00/120</div>
+                </div>
+                <img class="profileCards_img" src="/static/img/contests/profile.png" alt="">
             </div>
-            <div class="profileCards__info">
-                <div class="profileCards__time">00:57:33</div>
-                <div class="profileCards__count">00/120</div>
-            </div>
-            <img class="profileCards_img" src="/static/img/contests/profile.png" alt="">
-        </div>
-        <div class="profileCards__card">
-            <div class="profileCards__info">
-                <div class="profileCards__direct">Направление</div>
-                <div class="profileCards__title">Заголовок</div>
+            <div class="profileCards__card">
+                <div class="profileCards__info">
+                    <div class="profileCards__direct">Направление</div>
+                    <div class="profileCards__title">Заголовок</div>
 
+                </div>
+                <div class="profileCards__info">
+                    <div class="profileCards__time">00:57:33</div>
+                    <div class="profileCards__count">00/120</div>
+                </div>
+                <img class="profileCards_img" src="/static/img/contests/profile.png" alt="">
             </div>
-            <div class="profileCards__info">
-                <div class="profileCards__time">00:57:33</div>
-                <div class="profileCards__count">00/120</div>
-            </div>
-            <img class="profileCards_img" src="/static/img/contests/profile.png" alt="">
-        </div>
-   </div>
-   </div>
-   
-</div>
+    </div>
+    </div>
+    
+    </div>
 {% endblock content %}
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const fileInput = document.getElementById('fileInput');
+        fileInput.addEventListener('change', handleFileSelect);
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/upload_avatar/', true);
+                xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        const responseData = JSON.parse(xhr.responseText);
+                        console.log(responseData.url);
+
+                        // Обновляем изображение в интерфейсе
+                        const profileImage = document.querySelector('.profile__img');
+                        profileImage.src = responseData.url;
+
+                        const navbarProfileImage = document.querySelector('.header__profile');
+                        navbarProfileImage.src = responseData.url;
+                    } else {
+                        console.error('Error:', xhr.statusText);
+                    }
+                };
+
+                xhr.send(formData);
+            }
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+</script>
+{% endblock scripts %}
 
 

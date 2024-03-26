@@ -150,7 +150,8 @@ TEMPLATES_URL = '/templates/'
 TEMPLATES = [ 
     { 
         'BACKEND': 'django.template.backends.django.DjangoTemplates', 
-        'DIRS': [ 
+        'DIRS': [
+            os.path.join(BASE_DIR, "templates"),
             *[os.path.join(BASE_DIR, app, 'templates') for app in MY_APPS], 
         ], 
         'APP_DIRS': True, 
