@@ -41,11 +41,13 @@
 {% endblock styles %}
 
 {% block content %}
+<main>
     <div class="toolbar container">
-        <div class="toolbar__title">Событие: {{ event }}</div>
 
         <div class="toolbar__container">
             <div class="toolbar__tabs">
+                <div class="toolbar__title">Событие: {{ event }}</div>
+
                 <button class="tablink active" data-tab="tab1">Задание</button>
                 <button class="tablink" data-tab="tab2">Выходные данные</button>
                 <button class="tablink" data-tab="tab3">Условия</button>
@@ -53,12 +55,12 @@
                 <div id="tab1" class="tabcontent" style="display: block">
                     {% for taskList in tasks %}
                         {% if taskList.title in results %} {% comment %} Если выполнено {% endcomment %}
-                            <div class="tabcontent__task" id="{{taskList.id}}">
+                            <div class="tabcontent__task task-done" id="{{taskList.id}}">
                                 {{ taskList.title }}
                             </div>
                         {% elif taskList.title == task.title %} {% comment %} Задание, которые ты ща делаешь {% endcomment %}
                             <a href="{% url 'event_task' event.title taskList.title %}">
-                                <div class="tabcontent__task" id="{{taskList.id}}">
+                                <div class="tabcontent__task task-active" id="{{taskList.id}}">
                                     {{ taskList.title }}
                                 </div>
                             </a>
@@ -82,9 +84,6 @@
                 <div class="toolbar__languages languages">
                     <button class="languages__btn">Python</button>
                     <div class="languages__content">
-                        <!-- <button>Python</button>
-                        <button>Assembler</button>
-                        <button>KOTLIN</button> -->
                         {% for programming_language in programming_languages %}
                                 <button>{{ programming_language }}</button>
                         {% endfor %}
@@ -116,6 +115,7 @@
             </div>
         </div>
     </div>
+</main>
 {% endblock content %}
 
 {% block scripts %}
@@ -147,7 +147,8 @@ function changeMode(language) {
 
 <script src="{% static 'js/list_switching.js' %}"></script>
 <script src="{% static 'js/reset.js' %}"></script>
-<script src="{% static "app.js" %}"></script>
+<script src="{% static 'app.js' %}"></script>
+<script src="{% static 'task.js' %}"></script>
 <!-- <script src="{% static 'js/run_code.js' %}"></script> -->
 <script>
     function getCSRFToken() {

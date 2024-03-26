@@ -3,19 +3,19 @@
 
 {% block form %}
     <form method="post" action="{% url 'registration' %}" enctype="multipart/form-data">
-    {% csrf_token %}
+        {% csrf_token %}
     {% for field in form %}
         {% if field.name == 'agree_to_terms' or field.name == 'mailing' %}
             <div class="register__description">
                 {{ field }} {{ field.label }}
             </div>
         {% else %}
-            <div class="register__container">
+            <div class="login__container">
                 {{field}}
             </div>
         {% endif %}
     {% endfor %}
-        <div class="register__button">
+        <div class="login__button">
             <button class="btn" type="submit">
                 Создать аккаунт
             </button>

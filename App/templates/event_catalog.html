@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block content %}
+<main>
     <div class="eventNav container">
         <div class="eventNav__search">
-            <img src="static\img\contests\search.svg" alt="">
             <input type="text" placeholder="Название мероприятия или автор" class="eventNav__input">
         </div>  
         <div class="eventNav__mark">
@@ -54,18 +54,6 @@
                             </div>
                             {% endif %}
                         </div>
-                        <div class="eventCards__content">
-                            {% for tag in event.tag.all %}
-                                <div class="eventCards__tags">
-                                    Тег: {{tag}}
-                                </div>
-                            {% endfor %}
-                            <div class="eventCards__data">
-                                <div class="eventCards__score">230 очков</div>
-                                <div class="eventCards__lvl">7LV</div>
-                            </div>
-                        </div>
-                        
                         <div class="eventCards__btn">
                             {% if event.title in registered_events %}
                                 <a href="{% url "event_task" event.title None%}">
@@ -84,7 +72,7 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="populars container">
+            <div class="populars">
                 <div class="populars__name">Часто ищут</div>
                 <div class="populars__cards">
                     <div class="populars__card">
@@ -147,4 +135,7 @@
             </div>
         </div>
     </div>
+</main>
+<script src="{% static 'app.js' %}"></script>
+<script src="{% static 'event.js' %}"></script>
 {% endblock content %}

@@ -2,68 +2,98 @@
 {% load static %}
 
 {% block content %}
+<main>
     <div class="profile container">
-    <div class="profile__data">
-        <div class="profile__avatar">
-            {% if user.photo %}
-                <input type="file" id="fileInput" style="display:none;">
-                <label for="fileInput" class="file-label">
-                    <img src="{{ user.photo.url }}" alt="" class="profile__img">
-                </label>
-            {% else %}
-                <input type="file" id="fileInput" style="display:none;">
-                <label for="fileInput" class="file-label">
-                    <img src="{% static "img/profile.png" %}" alt="">
-                </label>
-            {% endif %}
+        <div class="profile__data">
+            <div class="profile__avatar">
+                {% if user.photo %}
+                    <input type="file" id="fileInput" style="display:none;">
+                    <label for="fileInput" class="file-label">
+                        <img src="{{ user.photo.url }}" alt="" class="profile__img">
+                    </label>
+                {% else %}
+                    <input type="file" id="fileInput" style="display:none;">
+                    <label for="fileInput" class="file-label">
+                        <img src="{% static "img/profile.png" %}" class="profile__img" alt="">
+                    </label>
+                {% endif %}
+            </div>
+            <div class="profile__name"> <span>@</span>{{user.full_name}}</div>  
+            <div class="profile__email">{{user.email}}</div>  
+            <div class="profile__btns">
+                <button class="profile__btn btn" id="profile-edit">Редактировать профиль</button>
+                <a href="{% url 'logout' %}" class="profile__btn btn">Выйти</a>
+            </div>
         </div>
-        <div class="profile__name"> <span>@</span>{{user.full_name}}</div>  
-        <div class="profile__email">{{user.email}}</div>  
-        <button class="profile__btn btn">Редактировать профиль</button>
-    </div>
-    <div class="profileCards">
-        <div class="profileCards__suptitle">Расписание</div>
-        <div class="profileCards__container">
-            <div class="profileCards__card">
-                <div class="profileCards__info">
-                    <div class="profileCards__direct">Направление</div>
-                    <div class="profileCards__title">Заголовок</div>
-
+        <div class="profileCards">
+            <div class="profileCards__suptitle">Расписание</div>
+            <div class="profileCards__container">
+                <div class="profileCards__card">
+                    <div class="profileCards__info">
+                        <div class="profileCards__title">Заголовок</div>
+                        <div class="profileCards__direct">Направление</div>    
+                    </div>
+                    <img class="profileCards_img" src="{% static "img/profile.png" %}" alt="">
                 </div>
-                <div class="profileCards__info">
-                    <div class="profileCards__time">00:57:33</div>
-                    <div class="profileCards__count">00/120</div>
+                <div class="profileCards__card">
+                    <div class="profileCards__info">
+                        <div class="profileCards__title">Заголовок</div>
+                        <div class="profileCards__direct">Направление</div>    
+                    </div>
+                    <img class="profileCards_img" src="{% static "img/profile.png" %}" alt="">
                 </div>
-                <img class="profileCards_img" src="/static/img/contests/profile.png" alt="">
+                <div class="profileCards__card">
+                    <div class="profileCards__info">
+                        <div class="profileCards__title">Заголовок</div>
+                        <div class="profileCards__direct">Направление</div>    
+                    </div>
+                    <img class="profileCards_img" src="{% static "img/profile.png" %}" alt="">
+                </div>
+                <div class="profileCards__card">
+                    <div class="profileCards__info">
+                        <div class="profileCards__title">Заголовок</div>
+                        <div class="profileCards__direct">Направление</div>    
+                    </div>
+                    <img class="profileCards_img" src="{% static "img/profile.png" %}" alt="">
+                </div>
+         </div>
+        </div>
+        <div class="profileEdit">
+            <div class="profileEdit__title">
+                Редактирование профиля
             </div>
-            <div class="profileCards__card">
-                <div class="profileCards__info">
-                    <div class="profileCards__direct">Направление</div>
-                    <div class="profileCards__title">Заголовок</div>
-
+            <div class="profileEdit__inputs">
+                <div class="profileEdit__input profileEdit__name">
+                    <div >Полное имя</div>
+                    <input placeholder="Имя" type="text">
                 </div>
-                <div class="profileCards__info">
-                    <div class="profileCards__time">00:57:33</div>
-                    <div class="profileCards__count">00/120</div>
+                <div class="profileEdit__input profileEdit__nickname">
+                    <div >Никнейм</div>
+                    <input placeholder="Никнейм" type="text">
                 </div>
-                <img class="profileCards_img" src="/static/img/contests/profile.png" alt="">
+                <div class="profileEdit__input profileEdit__email">
+                    <div>Email</div>
+                    <input placeholder="null@gmail.com" type="email">
+                </div>
+                <div class="profileEdit__input profileEdit__number">
+                    <div>Номер</div>
+                    <input placeholder="+71234567890" type="number">
+                </div>
+                <div class="profileEdit__input profileEdit__password">
+                    <div>Пароль</div>
+                    <input placeholder="********" type="password">
+                </div>
+                <div class="profileEdit__input profileEdit__password">
+                    <div>Поавтор пароля</div>
+                    <input placeholder="********" type="password">
+                </div>
             </div>
-            <div class="profileCards__card">
-                <div class="profileCards__info">
-                    <div class="profileCards__direct">Направление</div>
-                    <div class="profileCards__title">Заголовок</div>
-
-                </div>
-                <div class="profileCards__info">
-                    <div class="profileCards__time">00:57:33</div>
-                    <div class="profileCards__count">00/120</div>
-                </div>
-                <img class="profileCards_img" src="/static/img/contests/profile.png" alt="">
+            <div class="profileEdit__save">
+                <button class="btn">Применить</button>
             </div>
+        </div>
     </div>
-    </div>
-    
-    </div>
+</main>
 {% endblock content %}
 {% block scripts %}
 <script>
@@ -117,6 +147,47 @@
         }
     });
 </script>
+<script>
+   
+    const profileEditButton = document.getElementById('profile-edit');
+    const profileCardsBlock = document.querySelector('.profileCards');
+    const profileEditBlock = document.querySelector('.profileEdit');
+
+    const profileSaveButton = document.querySelector('.profileEdit__save');
+
+    profileEditButton.addEventListener('click', function() {
+        profileCardsBlock.style.transition = "opacity 0.5s";
+        profileCardsBlock.style.opacity = 0;
+
+        setTimeout(function() {
+            profileCardsBlock.style.display = "none";
+        }, 500);
+       
+        profileEditBlock.style.transition = "opacity 0.5s";
+        profileEditBlock.style.opacity = 1;
+        setTimeout(function() {
+            profileEditBlock.style.display = "block";
+        }, 500);
+    });
+
+    profileSaveButton.addEventListener('click', function() {
+        profileEditBlock.style.transition = "opacity 0.5s";
+        profileEditBlock.style.opacity = 0;
+
+        setTimeout(function() {
+            profileEditBlock.style.display = "none";
+        }, 500); 
+       
+        profileCardsBlock.style.transition = "opacity 0.5s";
+        profileCardsBlock.style.opacity = 1;
+        setTimeout(function() {
+            profileCardsBlock.style.display = "block";
+
+        }, 500);
+    });
+
+</script>
+<script src="{% static 'app.js' %}"></script>
 {% endblock scripts %}
 
 

@@ -2,6 +2,7 @@
     padding: 0 20px;
     max-width: 1400px;
     margin: 0 auto;
+    width: 100%;
 }
 
 @media (max-width: 767.98px) {
@@ -100,10 +101,12 @@ h6 {
 html,
 body {
     box-sizing: border-box;
-    overflow-x: hidden;
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+
     background: #00010B;
     font-family: "Rubik", sans-serif;
 }
@@ -142,6 +145,8 @@ img {
 }
 
 .burger-content {
+    display: flex;
+    flex-direction: column;
     padding: 80px 0px;
 }
 
@@ -178,7 +183,7 @@ img {
         display: none;
     }
     .burger-content {
-        text-align: center;
+        
     }
     .burger-menu-btn {
         display: block;
@@ -248,10 +253,8 @@ img {
 }
 
 .register__description {
-    width: 80%;
     line-height: 140%;
-    font-size: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 @media (max-width: 1024px) {
@@ -338,7 +341,7 @@ img {
     flex-direction: column;
     justify-content: center;
     display: flex;
-    height: 70%;
+}
 }
 
 @media (max-width: 360px) {
@@ -442,16 +445,21 @@ img {
 }
 
 .header {
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.0901960784);
-
     margin-bottom: 40px;
 }
-
+main{
+    flex: 1 0 auto;
+}
+.footer{
+    flex: 0 0 auto;
+}
 .header__logo img {
     width: 50%;
 }
@@ -466,10 +474,20 @@ img {
         display: none;
     }
 }
-
+.header__links{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+}
+.header__links a{
+    color: #AEAEAE;
+}
 .header__link {
     color: #AEAEAE;
     margin-right: 10px;
+    font-size: 1.3rem;
+    margin-right: 2rem;
 }
 
 .header__link span {
@@ -620,6 +638,7 @@ img {
 }
 
 .hardSkills__img img {
+    border-radius: 10px;
     width: 100%;
     -o-object-fit: contain;
     object-fit: contain;
@@ -773,6 +792,8 @@ img {
 
 .blocks__right__content {
     padding: 150px 50px 200px 50px;
+    background-image: url(../img/stars.png);
+    background-size: contain;
 }
 
 .blocks__currency {
@@ -960,7 +981,7 @@ img {
 
 .footer__subtitle {
     font-size: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .footer__subtitle:first-child {
@@ -969,7 +990,9 @@ img {
 }
 
 .footer__subtitle span {
+    display: inline-block;
     color: #5C0089;
+    margin-bottom: 5px;
 }
 
 .footer__links {
@@ -977,6 +1000,7 @@ img {
     justify-content: space-between;
     align-items: center;
     color: #ffffff;
+    padding-top: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -1048,7 +1072,7 @@ img {
 }
 
 @media (max-width: 768px) {
-    .header__btns {
+    .header__links:nth-child(2) {
         display: none;
     }
 }
@@ -1057,8 +1081,11 @@ img {
     color: #AEAEAE;
     font-size: 18px;
     margin-right: 40px;
+    padding: 10px 0;
 }
-
+.header__btn:not(:last-child){
+    margin-bottom:.2rem;
+}
 .header__searchContainer {
     display: flex;
     align-items: center;
@@ -1085,12 +1112,17 @@ img {
 
 .header__profile {
     width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+
 }
 
 .header__info {
     display: flex;
     align-items: center;
-    color: #fff;
+    color: #fff;  
+
 }
 
 
@@ -1124,7 +1156,12 @@ img {
 .eventNav__input {
     background: transparent;
     width: 100%;
-    font-size: 1.5vw;
+    font-size: 1.2vw;
+    padding-left: 25px;
+    background-image: url("../icons/base/search.svg");
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: left;
 }
 .eventNav__mark {
     display: flex;
@@ -1159,7 +1196,8 @@ img {
 .events__statuses {
     display: flex;
     font-size: 1.5vw;
-    margin-bottom: 2vw;
+    margin-bottom: 3vw;
+    cursor: pointer;
 }
 .events__status {
     padding-right: 1vw;
@@ -1175,8 +1213,9 @@ img {
     justify-content: space-between;
 }
 .eventCards__card{
-    flex: 0 0 49%;
+    flex: 0 0 32%;
     border: 1px solid #5C0089;
+    box-shadow: 1px 0px 20px 2px #5C0089;
     padding: 20px;
     margin-bottom: 2vw;
     border-radius: 5px;
@@ -1211,9 +1250,7 @@ img {
 .eventCards__img img{
     border-radius: 10px;
 }
-.eventCards__tags {
-    font-size: 1rem;
-}
+
 @media (max-width: 768px) {
     .eventCards__title {
         font-size: 1.5rem;
@@ -1222,17 +1259,9 @@ img {
         font-size: 1rem;
     }
 }
-.eventCards__data {
-    padding-right: 10px;
-}
-.eventCards__score {
-}
-.eventCards__lvl {
-    font-weight: 800;
-    color: #5C0089;
-}
+
 .eventCards__btn {
-    text-align: center;
+    margin-bottom: 1rem;
     
 }
 .eventCards__btn button{
@@ -1248,6 +1277,11 @@ img {
     justify-content: space-between;
 }
 .eventCards__count {
+    background-image: url("../img/peoples.svg");
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-size: 20px;
+    padding-left: 25px;
 }
 .eventCards__role {
 }
@@ -1264,7 +1298,7 @@ img {
 .populars__cards{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 .populars__card {
     flex: 0 0 24%;
@@ -1295,6 +1329,7 @@ img {
 
 .profile {
     display: flex;
+    justify-content: space-between;
     margin-bottom: 10rem;
     color: #FFF;
     font-size: 1.5rem;
@@ -1304,9 +1339,19 @@ img {
 .profile__data {
    flex: 0 0 22%;
 }
+.profileCards{
+    flex: 0 0 75%;
+}
 .profile__avatar {
     max-width: 15vw;
     margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+}
+.profile__img{
+    width: 15vw;
+    height: 15vw;
+    object-fit: cover;
 }
 .profile__avatar img{
     border-radius: 10px;
@@ -1318,13 +1363,56 @@ img {
 .profile__email{
     margin-bottom: 20px;
 }
-.profile__btn {
+.profile__btns{
+
+}
+.profile__btn:not(:last-child){
+    margin-bottom: 1.5rem;
+}
+.profile__btn:last-child{
+    border-color: rgba(255, 0, 0, 0.404);
+}
+
+.profileEdit {
+    flex: 0 0 75%;
+    display: none;
+    width: 100%;
+}
+.profileEdit__title {
+    margin-bottom: 3rem;
+}
+.profileEdit__inputs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     
 }
-.btn {
+.profileEdit__input{
+    flex: 0 0 48%;
+    margin-bottom: 2rem;
 }
-.profile__cards {
-
+.profileEdit__input div{
+    margin-bottom: 10px;
+}
+.profileEdit__input input{
+    width: 100%;
+    background: transparent;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.profileEdit__input:not(:last-child){
+    margin-bottom: 15px;
+}
+.profileEdit__save{
+    text-align: right;
+}
+.profileEdit__save button{
+    border-color: rgba(60, 255, 0, 0.329);
+}
+.profileEdit__name {
+}
+.profileEdit__email {
 }
 .profileCards__suptitle{
     font-size: 1.6rem;
@@ -1337,7 +1425,7 @@ img {
 }
 .profileCards__card {
     display: flex;
-    flex: 0 0 48%;
+    flex: 0 0 32%;
     height: 6rem;
     margin-bottom: 2rem;
     display: flex;
@@ -1348,7 +1436,7 @@ img {
 .profileCards__info {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 10px;
 
 }
@@ -1358,20 +1446,13 @@ img {
 }
 .profileCards__direct {
     color: #FFF;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 
 }
-.profileCards__count{
-    color: #FFD600;
-    font-size: 1.2rem;
-}
+
 .profileCards__title {
 }
-.profileCards__time {
-   
-    font-size: 1.2rem;
-    color: #8200AF;
-}
+
 .profileCards_img {
     width: 5vw;
 }
@@ -1384,7 +1465,6 @@ img {
     padding: 25px;
     border-radius: 5px;
     width: 100%;
-    height: 100%;
 }
 .tablink {
     background-color: transparent;
@@ -1398,12 +1478,21 @@ img {
 .tabcontent__task {
     font-size: 1.3rem;
     padding-bottom: 5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.322);
+    border: 1px solid rgba(255, 255, 255, 0.322);
+    margin-bottom: 1rem;
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 10px;
+}
+.tabcontent__task:last-child{
+}
+.task-done{
+   border-color: #09ff0042;
+}
+.task-active{
+    border-color: #8200AF;
 }
 
-.tabcontent__task:not(:last-child){
-    margin-bottom: 2rem;
-}
 .tablink.active {
     border: 1px solid #fff;
     border-radius: 5px;
@@ -1411,6 +1500,7 @@ img {
 
 .toolbar {
     color: #fff;
+    margin-bottom: 5rem;
 }
 .toolbar__container {
     display: flex;
@@ -1423,7 +1513,7 @@ img {
     font-size: 2rem;
 }
 .toolbar__tabs {
-    flex: 0 0 30%;
+    flex: 0 0 32%;
 }
 @media (max-width: 991px) {
    
@@ -1436,6 +1526,7 @@ img {
 .toolbar__languages {
     text-align: right;
     margin-bottom: 1rem;
+    position: relative;
 }
 
 .languages__btn {
@@ -1459,12 +1550,12 @@ img {
     background-color: transparent;
     z-index: -1;
     transition: left 0.5s ease;
-    top: 60px;
+    top: 0px;
     left: 80%; 
     opacity: 0;
    
 }
-.show {
+.lang-show {
     left: 40%; 
     opacity: 1;
     z-index: 1;
