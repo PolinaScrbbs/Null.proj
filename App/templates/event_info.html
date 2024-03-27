@@ -1,8 +1,130 @@
 {% extends 'base/mainBase.html' %} {% load static %}
 {% block content %} 
-<a href="{% url 'reg_event' event %}">
+{% comment %} <a href="{% url 'reg_event' event %}">
     <div class="button">
         Зарегистрироваться
     </div>
-</a> 
+</a>  {% endcomment %}
+
+<div class="eventInfo container">
+    <div class="eventInfo__block">
+        <div class="eventInfo__content ">
+            <div class="eventInfo__title">Курс по <span class="yellow">Python</span></div>
+            <div class="eventInfo__description">
+                С другой стороны постоянное информационно техническое обеспечение нашей деятельности способствует подготовке и реализации системы масштабного изменения ряда параметров. 
+            </div>
+            <div class="eventInfo__subdescription">
+                <div class="eventInfo__time">2 часа</div>
+                <div class="eventInfo__author">by Author</div>
+            </div>
+        </div>
+        <div class="eventInfo__content eventTags">
+            <div class="eventInfo__tags">
+                <div class="eventInfo__tag">
+                    <div>9-11 классы</div>
+                    <img src="{% static 'icons/base/python.png' %}" alt="">
+                </div>
+                <div class="eventInfo__tag">
+                    <div>Python</div>
+                    <img src="{% static 'icons/base/python.png' %}" alt="">
+                </div>
+                <div class="eventInfo__tag">
+                    <div>Math</div>
+                    <img src="{% static 'icons/base/python.png' %}" alt="">
+                </div>
+                <div class="eventInfo__tag">
+                    <div>DataTime</div>
+                    <img src="{% static 'icons/base/python.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="eventInfo__block">
+        <div class="eventSkills">
+            <div class="eventInfo__content eventSkills__content">
+                <div class="eventSkills__title">Использующиеся навыки</div>
+                <div class="eventSkills__lsit">
+                    <div class="eventSkills__skill">
+                        Владение языком Python
+                    </div>
+                    <div class="eventSkills__skill">
+                        Написание простых вычислительных
+                        алгоритмов
+                    </div>
+                    <div class="eventSkills__skill">
+                        Склонность к мазохизму
+                    </div>
+                    <div class="eventSkills__skill">
+                        Навыки написания чистого, понятного
+                        для остальных грамматно структурированного написанного кода
+                    </div>
+                </div>
+            </div>
+            <div class="eventInfo__content eventSkills__content">
+                <div class="eventDetails__title">
+                    Подробнее
+                </div>
+                <div class="eventDetails__description">
+                    Данный курс служит мостиком между школьной математикой и настоящей живой наукой, знаниями древних греков и тем, что было открыто буквально вчера, а также тем, что еще предстоит узнать человечеству. Курс охватывает все разделы современной математики, показывая их удивительную взаимосвязь, двигаясь по спирали от арифметики и наглядной геометрии для 6-го класса к глубоким фактам теории групп, колец и полей,
+                    кватернионам и теореме Ферма. Автор курса - д.ф.-м.н., к.э.н. А.В.Савватеев, неутомимый популяризатор математики, известный лектор и ютубер.
+                </div>
+            </div>
+        </div>
+        <div class="eventStats">
+            <div class="eventInfo__content eventStats__content">
+                <div class="eventSkills__direction">
+                    Программирвоание
+                </div>
+                <div class="eventSkills__name">Курс по Python</div>
+                <div class="eventStat">
+                    <div class="eventStat__list">
+                        <div class="eventStat__tasks">
+                            32
+                        </div>
+                        <div class="eventStat__exp">
+                            500
+                        </div>
+                        <div class="eventStat__score">
+                            420
+                        </div>
+                    </div>
+                </div>
+                <div class="eventSkills__btn">
+                    <button>
+                        Зарегистрироваться
+                    </button>
+                </div>
+            </div>
+            <div class="eventInfo__content eventStats__content">
+                <div class="eventInfo__creater">
+                    <div class="eventCreater__title">О создателе</div>
+                    <div class="eventCreater__content eventCreater">
+                        <div class="eventCreater__img">
+                            <img src="{% static 'img/profile.png' %}" alt="">
+                        </div>
+                        <div class="eventCreater__info">
+                            <div class="eventCreater__name">
+                                <span class="yellow">@</span>name
+                            </div>
+                            <div class="eventCreater__description">
+                                Я люблю программировать на Kotlin 
+                                и смотреть аниме про Гулей
+                            </div>
+                            <div class="eventCrater__subtitle">
+                                Клуб любителей математики в <span class="yellow">Telegram</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    
+    <div class="eventInfo__block eventDetails">
+       
+      
+    </div>
+</div>
+
 {% endblock content %}

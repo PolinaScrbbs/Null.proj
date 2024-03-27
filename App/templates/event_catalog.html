@@ -47,10 +47,12 @@
                             {% if event.avatar %}
                                 <div class="eventCards__img">
                                     <img src="{{ event.avatar.url }}" alt="">
+                                    <diV class="eventCards__date">{{ event.date }}</diV>
                                 </div>
                             {% else %}
                             <div class="eventCards__img">
                                 <img src="{% static "img/null.png" %}" alt="Аватарка">
+                                <diV class="eventCards__date">{{ event.date }}</diV>
                             </div>
                             {% endif %}
                         </div>
@@ -67,7 +69,7 @@
                         </div>
                         <div class="eventCards__stat">
                             <div class="eventCards__count">Количество участников: {{event.number_of_participants}}</div>
-                            <div class="eventCards__role">Организатор</div>
+                            <div class="eventCards__role">{{ evetn.r }}</div>
                         </div>
                     </div>
                 {% endfor %}

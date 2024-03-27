@@ -126,6 +126,9 @@ img {
     flex-direction: column;
     box-sizing: border-box;
 }
+.yellow{
+    color: #FFD600;
+}
 
 .btn {
     background: transparent;
@@ -1162,6 +1165,7 @@ main{
     background-repeat: no-repeat;
     background-size: 20px;
     background-position: left;
+    color: #fff;
 }
 .eventNav__mark {
     display: flex;
@@ -1181,7 +1185,9 @@ main{
 
 
 /*caaaaaaaaaaaaaaards*/
-
+.eventCards__card.hidden {
+    display: none;
+}
 .events {
     color: #fff;
 }
@@ -1210,15 +1216,18 @@ main{
 .eventCards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    
 }
 .eventCards__card{
-    flex: 0 0 32%;
+    flex: 0 0 31%;
     border: 1px solid #5C0089;
     box-shadow: 1px 0px 20px 2px #5C0089;
     padding: 20px;
     margin-bottom: 2vw;
     border-radius: 5px;
+}
+.eventCards__card:not(:last-child){
+    margin-right: 2%;
 }
 @media (max-width: 620px) {
     .eventCards {
@@ -1233,6 +1242,7 @@ main{
     justify-content: space-between;
 }
 .eventCards__info {
+    flex: 0 0 50%;
 }
 .eventCards__title {
     font-size: 2rem;
@@ -1243,14 +1253,18 @@ main{
     margin-bottom: 20px;
 }
 .eventCards__img{
+    flex: 0 0 40%;
     border-radius: 10px;
     width: 8vw;
     margin-bottom: 10px;
 }
 .eventCards__img img{
     border-radius: 10px;
+    margin-bottom: .5rem;
 }
-
+.eventCards__date{
+    text-align: right;
+}
 @media (max-width: 768px) {
     .eventCards__title {
         font-size: 1.5rem;
@@ -1634,6 +1648,8 @@ main{
 .toolbar__button:not(:last-child){
     margin-right: 20px;
 }
+
+/*Code mirror*/
 .CodeMirror{
     height: 30vw;
 }
@@ -1651,4 +1667,238 @@ main{
 }
 .CodeMirror-gutter{
     background: #00010B;
+
+} 
+/*Code mirror*/
+    
+
+.eventInfo {
+    color: #fff;
+}
+
+.container {
+}
+.eventInfo__block {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 3rem;
+}
+
+.eventInfo__block:not(:first-child){
+    padding-top: 3rem;
+
+}
+.eventInfo__block:first-child{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+}
+.eventInfo__content {
+    flex: 0 0 45%;
+}
+
+.eventSkills__content:not(:last-child){
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.178);
+}
+.eventStats__content:not(:last-child){
+    margin-bottom: 5rem;
+}
+.eventInfo__content:first-child{
+
+}
+.eventInfo__title {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+.eventInfo__description {
+    font-size: 1.5rem;
+    line-height: 130%;
+  
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.418);
+}
+.eventInfo__subdescription {
+    display: flex;
+    justify-content: space-between;
+}
+
+.eventInfo__time {
+    font-size: 1.2rem;
+}
+.eventInfo__author{
+    font-size: 1.2rem;
+}
+.eventTags{
+    display: flex;
+    align-items: center;
+}
+.eventInfo__tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 1.2rem;
+}
+.eventInfo__tag {
+    flex: 0 0 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #FFD600;
+    border-radius: 5px;
+    padding: 5px 25px;
+}
+.eventInfo__tag:not(:last-child){
+    margin-bottom: 1rem;
+}
+.eventInfo__tag div{
+   flex: 0 0 80%;
+}
+.eventInfo__tag img{
+    flex: 0 0 10%;
+    width: 25px;
+}
+.eventInfo__tag:not(:last-child){
+    margin-right: 2%;
+
+}
+.eventSkills {
+    flex: 0 0 45%;
+}
+.eventStats{
+    flex: 0 0 45%;
+}
+@media (max-width: 992px) {
+    .eventInfo__block{
+        flex-wrap: wrap;
+    }
+    .eventInfo__content {
+        flex: 0 0 100%;
+    }
+    .eventInfo__subdescription{
+        margin-bottom: 2rem;
+    }
+    .eventSkills__content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    .eventSkills {
+        flex: 0 0 100%;
+    }
+    .eventStats{
+        flex: 0 0 100%;
+    }
+    .eventStats__content:not(:last-child){
+        margin-bottom: 3rem;
+    }
+}
+.eventSkills__title {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+.eventSkills__lsit {
+}
+.eventSkills__skill {
+    line-height: 120%;
+    font-size: 1.5rem;
+    padding-left: 25px;
+    background-image: url(../icons/base/skill.svg);
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: 18px;
+}
+.eventSkills__skill:not(:last-child){
+    margin-bottom: 1rem;
+}
+.eventSkills__btns {
+}
+.eventSkills__btn {
+}
+.eventDetails {
+}
+.eventDetails__title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+.eventDetails__description {
+    font-size: 1.5rem;
+    line-height: 130%;
+}
+
+
+
+.eventSkills__direction {
+    font-size: 2rem;
+    margin-bottom: .5rem;
+}
+.eventSkills__name {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+.eventStat {
+    margin-bottom: 1.2rem;
+}
+.eventStat__list {
+    width: 25%;
+    display: flex;
+    justify-content: space-between;
+}
+.eventStat__list div{
+    padding-left: 20px;
+    background-size: 15px;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+.eventStat__tasks {
+    background-image: url(../icons/base/quest.svg);
+}
+.eventStat__exp {
+    background-image: url(../icons/base/crown.svg);
+}
+.eventStat__score {
+    background-image: url(../icons/base/krst.svg);
+}
+.eventSkills__btn {
+}
+.eventSkills__btn button{
+    padding: 10px 25px;
+    background: #5C0089;
+    color: #fff;
+    font-size: 1.5rem;
+    border-radius: 5px;
+}
+.eventInfo__creater {
+}
+.eventCreater {
+    display: flex;
+    margin-top: 2rem;
+}
+.eventCreater__title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+.eventCreater__content {
+}
+.eventCreater__img {
+    margin-right: 3%;
+}
+.eventCreater__img img{
+    border-radius: 10px;
+
+    width: 5vw;
+    height: 5vw;
+    object-fit: cover;
+}
+.eventCreater__name {
+    font-size: 1.5rem;
+    margin-bottom: .5rem;
+}
+.eventCreater__description {
+    line-height: 130%;
+    margin-bottom: .1rem;
+}
+.eventCrater__subtitle {
 }
