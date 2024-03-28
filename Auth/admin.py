@@ -1,16 +1,11 @@
 from django.contrib import admin
-from .models import CustomUser, Role
-
-@admin.register(CustomUser)
-class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'full_name')
-    search_fields = ('username', 'email', 'full_name')
+from .models import *
 
 @admin.register(Role)
 class RoleAdmin(admin.ModelAdmin):
     list_display = ('title',)
-    
-    
 
-
-
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'role')
+    search_fields = ('username', 'role')

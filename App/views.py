@@ -2,10 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from Auth.models import CustomUser, Role
-from Task.models.models import Task
-
-from .models.models import Direction, Event, Participant
+from Auth.models import User, Role
+from Event.models import Event, Participant
 from .forms import ProfileForm
 
 # @login_required
@@ -30,42 +28,11 @@ def index(request):
         }
         return render(request, 'index.html', context)
 
-#EVENT==========================================================================================>
-
-@login_required
-def event_info(request, event):
-    event = Event.objects.get(title=event)
-    try:
-        Participant.objects.get(event=event, user=CustomUser.objects.get(username=request.user))
-        is_reg = True
-    except:
-        is_reg = False
-
-    context = {
-        'event': event,
-        'is_reg': is_reg
-    }
-
-    return render(request, 'event_info.html', context)
-
-@login_required
-def reg_event(request, event):
-    user = CustomUser.objects.get(username=request.user)
-    event = Event.objects.get(title=event)
-
-    participant, created = Participant.objects.get_or_create(event=event, user=user)
-    if created:
-        event.number_of_participants_update()
-    
-    tasks = Task.objects.filter(event=event)
-    task = tasks.first().title
-    return redirect('event_task', event = event.title, task = task)
-
 #PROFILE==========================================================================================>
 
 @login_required 
 def profile(request, username):
-    user = CustomUser.objects.get(username=username)
+    user = User.objects.get(username=username)
     role = Role.objects.get(id=user.role_id)
     events = Event.objects.all()
     if request.method == 'POST':
@@ -94,13 +61,14 @@ def profile(request, username):
 @login_required
 def upload_avatar(request):
     if request.method == 'POST' and request.FILES.get('file'):
-        user = CustomUser.objects.get(username=request.user)
+        print(request.user)
+        user = User.objects.get(username=request.user)
         if user.is_authenticated:
             uploaded_file = request.FILES['file']
-            user.photo = uploaded_file
+            user.avatar = uploaded_file
             user.save()
 
-            response_data = {'url': user.photo.url}
+            response_data = {'url': user.avatar.url}
             return JsonResponse(response_data)
 
     return JsonResponse({'error': 'Invalid request'})

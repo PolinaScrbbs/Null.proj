@@ -14,7 +14,7 @@
     <header class="header container">
         <div class="header__links">
             <div class=" header__logo">
-                <img src="{% static 'img/logo.png' %}" alt="">
+                <img src="{% static 'base/mainBase/logo.png' %}" alt="">
             </div>
             <div class="header__link">
                 <a href="{% url 'index'%}">Каталог</a>
@@ -27,16 +27,16 @@
                  </a>
             </div>
             <div class="header__searchContainer">
-                <img src="{% static 'img/Contests/search.svg' %}" alt="">
+                <!-- <img src="{% static 'base/mainBase/search.svg' %}" alt=""> -->
                 <input class="header__search" type="text" placeholder="Поиск">
                 <span>| >_</span>
             </div>
             <div class="header__info">
                 <a href="{% url 'profile' user.username %}">
-                    {% if user.photo %}
-                    <img src="{{ user.photo.url }}" class="header__profile" alt="">
+                    {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" class="header__profile" alt="">
                     {% else %}
-                        <img src="{% static 'img/profile.png' %}" class="header__profile" alt="">
+                        <img src="{% static 'base/mainBase/profile.png' %}" class="header__profile" alt="">
                     {% endif %}
                 </a> 
             </div>
@@ -103,13 +103,13 @@
                 <div class="footer__links">
                     <div class="footer__socials">
                         <div class="footer__social">
-                            <a href="/"><img src="{% static '/icons/socials/tg.svg' %}" alt=""></a>
+                            <a href="/"><img src="{% static 'base/mainBase/socials/tg.svg' %}" alt=""></a>
                         </div>
                         <div class="footer__social">
-                            <a href=""><img src="{% static '/icons/socials/vk.svg' %}" alt=""></a>
+                            <a href=""><img src="{% static 'base/mainBase/socials/vk.svg' %}" alt=""></a>
                         </div>
                         <div class="footer__social">
-                            <a href="https://kg-college.ru/"><img src="{% static '/icons/socials/kgpk.png' %}" alt=""></a>
+                            <a href="https://kg-college.ru/"><img src="{% static 'base/mainBase/socials/kgpk.png' %}" alt=""></a>
                         </div>
                     </div>
                     <div class="footer__link">

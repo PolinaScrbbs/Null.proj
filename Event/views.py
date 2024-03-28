@@ -1,15 +1,49 @@
 import json
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
-from App.models.models import Event, Participant
+from App.models import *
+from Auth.models import User
 
-from .models.models import Task, TestData, Result
+from .models import *
 from .functions import *
 from .utils import *
 
+#EVENT==========================================================================================>
+
+@login_required
+def event_info(request, event):
+    event = Event.objects.get(title=event)
+    try:
+        Participant.objects.get(event=event, user=User.objects.get(username=request.user))
+        is_reg = True
+    except:
+        is_reg = False
+
+    context = {
+        'event': event,
+        'is_reg': is_reg
+    }
+
+    return render(request, 'event_info.html', context)
+
+@login_required
+def reg_event(request, event):
+    user = User.objects.get(username=request.user)
+    event = Event.objects.get(title=event)
+
+    participant, created = Participant.objects.get_or_create(event=event, user=user)
+    if created:
+        event.number_of_participants_update()
+    
+    tasks = Task.objects.filter(event=event)
+    task = tasks.first().title
+    return redirect('event_task', event = event.title, task = task)
+
 #TASK==========================================================================================>
 
+@login_required
 def event_task(request, event, task):
     event = Event.objects.get(title=event)
     tasks = Task.objects.filter(event=event)
@@ -57,6 +91,7 @@ def event_task(request, event, task):
 
     return render(request, 'event_task.html', context)
 
+@login_required
 def save_result(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -78,6 +113,7 @@ def save_result(request):
 
 #CODE==========================================================================================>
 
+@login_required
 def run_code(request):
     if request.method == 'POST':
         data = json.loads(request.body)

@@ -1,10 +1,9 @@
 from django import forms
-from .models.models import Direction, Event
-from Auth.models import CustomUser
+from Auth.models import User
 
 class ProfileForm(forms.ModelForm):
     class Meta:
-        model = CustomUser
+        model = User
         fields = ['username', 'full_name', 'email', 'phone_number']
 
     username = forms.CharField(required=False, label='Введите имя пользователя', widget=forms.TextInput(attrs={'placeholder': '@Username'}))

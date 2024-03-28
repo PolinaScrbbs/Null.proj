@@ -1,12 +1,12 @@
 from django import forms
-from .models import CustomUser
+from .models import User
 
 from .form_verification_def import data_availability, length_check, check_string, check_numeric, symbols_presence, symbols_absence, check_db, is_full_name, name_checker
 from .form_verification_def import password_data_availability, password_length_check, password_symbols_absence, password_equality_check
 
 class RegistrationForm(forms.ModelForm):
     class Meta:
-        model = CustomUser
+        model = User
         fields = ['username', 'full_name', 'email', 'password', 'password_check', 'agree_to_terms', 'mailing']
 
     username = forms.CharField(label='username', widget=forms.TextInput(attrs={'placeholder': 'Имя.Unique()', 'image_url': '/media/auth/user.svg'}))
@@ -30,7 +30,7 @@ class RegistrationForm(forms.ModelForm):
         symbols_presence(username, forbidden_symbols, 'Поле может содержать только буквы и цифры')
         symbols_presence(username, email_domains, 'Поле не может содержать домен почты')
         name_checker(username, 'Поле содержит запрещённые слова')
-        check_db('CustomUser', 'username', username, 'Пользователь с таким именем уже зарегистрирован')
+        check_db('User', 'username', username, 'Пользователь с таким именем уже зарегистрирован')
         
         return username
 
@@ -40,7 +40,7 @@ class RegistrationForm(forms.ModelForm):
         
         data_availability(email, 'Электронная почта')
         symbols_absence(email, email_domains, 'Формат электронной почты не верный')
-        check_db('CustomUser', 'email', email, 'Пользователь с таким e-mail уже зарегистрирован')
+        check_db('User', 'email', email, 'Пользователь с таким e-mail уже зарегистрирован')
 
         return email
 

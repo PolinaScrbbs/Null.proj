@@ -1,20 +1,26 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
-class BaseInfo(models.Model):
-    username = models.CharField(max_length=50, unique=True, blank=False, verbose_name='Никнейм')
-    full_name = models.CharField(max_length=100, blank=False, verbose_name='Полное имя')
-    email = models.EmailField(unique=True, blank=False, verbose_name='E-mail')
-    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name='Номер телефона')
-    photo = models.ImageField(upload_to='user_photos', blank=True, null=True, verbose_name='Фото')
-    mailing = models.BooleanField(verbose_name='Согласие на рассылку', null=False, default=False)
 
-    class Meta:
-        abstract = True
+#Субъекты (Пользователь или организация)
+# class Subject(models.Model):
+#     title = models.CharField(max_length=20, unique=True, verbose_name='Название')
+    
+#     class Meta:
+#         verbose_name = 'Субъект'
+#         verbose_name_plural = 'Субъекты' 
+    
+#     def __str__(self):
+#         return self.title
 
+#Роли (Администратор, модератор, пользователь)  
 class Role(models.Model):
     title = models.CharField(max_length=20, unique=True, verbose_name='Роль')
-
+    
+    class Meta:
+        verbose_name = 'Роль'
+        verbose_name_plural = 'Роли' 
+    
     def __str__(self):
         return self.title
 
@@ -36,8 +42,15 @@ class UserManager(BaseUserManager):
 
         return self.create_user(username, email, password, **extra_fields)
 
-class CustomUser(AbstractBaseUser, PermissionsMixin, BaseInfo):
-    role = models.ForeignKey(Role, on_delete=models.SET_NULL, blank=True, null=True, default='2', verbose_name='Роль', related_name='user_role')
+#Пользователи
+class User(AbstractBaseUser, PermissionsMixin):
+    avatar = models.ImageField(upload_to='user_avatars', blank=True, null=True, verbose_name='Аватарка')
+    username = models.CharField(max_length=50, unique=True, blank=False, verbose_name='Уникальное имя')
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, blank=True, default=3, null=True, verbose_name='Роль')
+    full_name = models.CharField(max_length=100, blank=False, verbose_name='Полное имя')
+    email = models.EmailField(unique=True, blank=False, verbose_name='E-mail')
+    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name='Номер телефона')
+    mailing = models.BooleanField(verbose_name='Согласие на рассылку', default=False)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -52,8 +65,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin, BaseInfo):
 
     class Meta:
         verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи' 
-
-        
+        verbose_name_plural = 'Пользователи'
 
 

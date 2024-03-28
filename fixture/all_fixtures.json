@@ -1,5 +1,10 @@
 [
-    {"model": "Auth.role", "pk": 1, "fields": {"title": "Administrator"}}, {"model": "Auth.role", "pk": 2, "fields": {"title": "User"}},
-    {"model": "Auth.customuser", "pk": 1, "fields": {"password": "pbkdf2_sha256$260000$c4ptbnlyUaSBoIGplLBGji$KoNPI81mVggqtezkj/gI5ZdJ3nHa7J5NIwsJirU15xI=", "last_login": null, "is_superuser": true, "username": "paketov", "full_name": "╚трэютёъшщ ╥шьюЇхщ ┬ырфшёыртютшў", "email": "polinascaraboobs@gmail.com","mailing": false, "phone_number": null, "photo": "", "role": 1, "is_active": true, "is_staff": true, "groups": [], "user_permissions": []}},
-    {"model": "App.direction", "pk": 1, "fields": {"creator": 1, "title": "Программирование" }}
+    {"model": "Auth.role", "pk": 1, "fields": {"title": "Администратор"}}, 
+    {"model": "Auth.role", "pk": 2, "fields": {"title": "Организатор"}}, 
+    {"model": "Auth.role", "pk": 3, "fields": {"title": "Пользователь"}},
+    
+    {"model": "Auth.user", "pk": 1, "fields": {"password": "pbkdf2_sha256$260000$c4ptbnlyUaSBoIGplLBGji$KoNPI81mVggqtezkj/gI5ZdJ3nHa7J5NIwsJirU15xI=", "last_login": null, "is_superuser": true, "username": "PolinaScrbbs", "full_name": "Ивановский Тимофей Владиславович", "email": "polinascaraboobs@gmail.com","mailing": false, "phone_number": null, "avatar": "", "role": 1, "is_active": true, "is_staff": true}},
+    {"model": "Auth.user", "pk": 2, "fields": {"password": "pbkdf2_sha256$260000$c4ptbnlyUaSBoIGplLBGji$KoNPI81mVggqtezkj/gI5ZdJ3nHa7J5NIwsJirU15xI=", "last_login": null, "is_superuser": true, "username": "Light2d", "full_name": "Жирков Павел Максимович", "email": "light2d@gmail.com","mailing": false, "phone_number": null, "avatar": "", "role": 1, "is_active": true, "is_staff": true}},
+    
+    {"model": "Event.direction", "pk": 1, "fields": {"creator": 1, "title": "Программирование для тех, у кого лапки" }}
 ]

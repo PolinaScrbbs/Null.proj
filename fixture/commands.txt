@@ -1,1 +1,1 @@
-python manage.py loaddata fixture/all_fixture.json
+python manage.py loaddata fixtures/all_fixture.json

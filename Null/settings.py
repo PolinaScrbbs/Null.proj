@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     
     'Auth',
     'App',
-    'Task'
+    'Event'
 ]
 
 MIDDLEWARE = [
@@ -77,7 +77,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'Auth.CustomUser'
+AUTH_USER_MODEL = 'Auth.User'
 
 #Настройка аутентификации по usermane или email
 AUTHENTICATION_BACKENDS = [
