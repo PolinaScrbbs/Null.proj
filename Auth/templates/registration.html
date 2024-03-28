@@ -1,20 +1,33 @@
 {% extends 'base/authBase.html' %} 
 {% load static %}
+{% load tags %}
 
 {% block form %}
     <form method="post" action="{% url 'registration' %}" enctype="multipart/form-data">
         {% csrf_token %}
-    {% for field in form %}
-        {% if field.name == 'agree_to_terms' or field.name == 'mailing' %}
-            <div class="register__description">
-                {{ field }} {{ field.label }}
-            </div>
-        {% else %}
-            <div class="login__container">
-                {{field}}
-            </div>
-        {% endif %}
-    {% endfor %}
+        {% for field in form %}
+            {% if field.name == 'agree_to_terms' or field.name == 'mailing' %}
+                <div class="register__description">
+                    {{ field }} 
+                    {% if field.label.split|length > 4 %}
+                        {{ field.label|get_first_half }}<br>
+                        {{ field.label|get_second_half }}
+                    {% else %}
+                        {{ field.label}}
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="login__container">
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
         <div class="login__button">
             <button class="btn" type="submit">
                 Создать аккаунт
@@ -25,3 +38,8 @@
         </div>
     </form>
 {% endblock form %}
+
+
+
+
+
