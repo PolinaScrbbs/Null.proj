@@ -2,4 +2,4 @@
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
 Запуск
-.\setup_and_run.ps1
+.\setup_and_run.ps1пшпвп

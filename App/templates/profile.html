@@ -18,7 +18,7 @@
                     </label>
                 {% endif %}
             </div>
-            <div class="profile__name"> <span>@</span>{{user.full_name}}</div>  
+            <div class="profile__name"> <span>@</span>{{user.username}}</div>  
             <div class="profile__email">{{user.email}}</div>  
             <div class="profile__btns">
                 <button class="profile__btn btn" id="profile-edit">Редактировать профиль</button>
@@ -62,35 +62,19 @@
             <div class="profileEdit__title">
                 Редактирование профиля
             </div>
-            <div class="profileEdit__inputs">
-                <div class="profileEdit__input profileEdit__name">
-                    <div >Полное имя</div>
-                    <input placeholder="Имя" type="text">
+            <form class="profileEdit__inputs", action="{% url "profile" request.user.username %}" method="post", enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in profile_form %}
+                    <div class="profileEdit__input profileEdit__name">
+                        <div>{{field.label}}</div>
+                        {{field}}
+                    </div>
+                {% endfor %}
+                <div class="profileEdit__save">
+                    <button class="btn profileEdit__back" type="submit">Назад</button>
+                    <button class="btn" type="submit">Применить</button>
                 </div>
-                <div class="profileEdit__input profileEdit__nickname">
-                    <div >Никнейм</div>
-                    <input placeholder="Никнейм" type="text">
-                </div>
-                <div class="profileEdit__input profileEdit__email">
-                    <div>Email</div>
-                    <input placeholder="null@gmail.com" type="email">
-                </div>
-                <div class="profileEdit__input profileEdit__number">
-                    <div>Номер</div>
-                    <input placeholder="+71234567890" type="number">
-                </div>
-                <div class="profileEdit__input profileEdit__password">
-                    <div>Пароль</div>
-                    <input placeholder="********" type="password">
-                </div>
-                <div class="profileEdit__input profileEdit__password">
-                    <div>Поавтор пароля</div>
-                    <input placeholder="********" type="password">
-                </div>
-            </div>
-            <div class="profileEdit__save">
-                <button class="btn">Применить</button>
-            </div>
+            </form>
         </div>
     </div>
 </main>
@@ -153,6 +137,8 @@
     const profileCardsBlock = document.querySelector('.profileCards');
     const profileEditBlock = document.querySelector('.profileEdit');
 
+    const profileEditBack = document.querySelector('.profileEditBack');
+
     const profileSaveButton = document.querySelector('.profileEdit__save');
 
     profileEditButton.addEventListener('click', function() {
@@ -170,7 +156,7 @@
         }, 500);
     });
 
-    profileSaveButton.addEventListener('click', function() {
+    profileEditBack.addEventListener('click', function() {
         profileEditBlock.style.transition = "opacity 0.5s";
         profileEditBlock.style.opacity = 0;
 

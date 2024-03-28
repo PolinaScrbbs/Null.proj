@@ -33,7 +33,7 @@ class Event(models.Model):
     
     avatar = models.ImageField(upload_to='events', blank=True, verbose_name='Аватар')
     direction = models.ForeignKey(Direction, on_delete=models.CASCADE, verbose_name='Направление')
-    title = models.CharField(max_length=20, unique=True, verbose_name='Мероприятие')
+    title = models.TextField( unique=True, verbose_name='Мероприятие')
     description = models.TextField(blank=True, null=True, verbose_name='Описание')
     tag = models.ManyToManyField(Tag, verbose_name='Теги')
     number_of_participants = models.PositiveIntegerField(default=0, verbose_name='Количестов участников')

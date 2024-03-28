@@ -41,7 +41,7 @@
                                     {{event.title}}
                                 </div>
                                 <div class="eventCards__description">
-                                    {{event.description}}
+                                    {{event.direction}}
                                 </div>
                             </div>
                             {% if event.avatar %}
@@ -57,15 +57,9 @@
                             {% endif %}
                         </div>
                         <div class="eventCards__btn">
-                            {% if event.title in registered_events %}
-                                <a href="{% url "event_task" event.title None%}">
-                                    <button class="btn">Перейти</button>
-                                </a>
-                            {% else %}
-                                <a href="{% url "reg_event" event.title %}">
-                                    <button class="btn">Участвовать</button>
-                                </a>
-                            {% endif %}
+                            <a href="{% url "event_info" event.title%}">
+                                <button class="btn">Перейти</button>
+                            </a>     
                         </div>
                         <div class="eventCards__stat">
                             <div class="eventCards__count">Количество участников: {{event.number_of_participants}}</div>

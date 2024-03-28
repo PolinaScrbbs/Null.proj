@@ -6,8 +6,7 @@ from Auth.models import CustomUser, Role
 from Task.models.models import Task
 
 from .models.models import Direction, Event, Participant
-
-from .forms import PhoneNumberForm
+from .forms import ProfileForm
 
 # @login_required
 def index(request): 
@@ -35,8 +34,9 @@ def index(request):
 
 @login_required
 def event_info(request, event):
+    event = Event.objects.get(title=event)
     try:
-        Participant.objects.get(event=Event.objects.get(title=event), user=CustomUser.objects.get(username=request.user))
+        Participant.objects.get(event=event, user=CustomUser.objects.get(username=request.user))
         is_reg = True
     except:
         is_reg = False
@@ -69,18 +69,24 @@ def reg_event(request, event):
 def profile(request, username):
     user = CustomUser.objects.get(username=username)
     role = Role.objects.get(id=user.role_id)
-    phone_number_form = PhoneNumberForm
     if request.method == 'POST':
-        phone_number_form = PhoneNumberForm(request.POST)
-        if phone_number_form.is_valid():
-            phone_number = phone_number_form.cleaned_data['phone_number']
-            CustomUser.objects.filter(id=user.id).update(phone_number=phone_number)
-  
+        profile_form = ProfileForm(request.POST, instance=user)
+        if profile_form.is_valid():
+            profile_form.save()
+            
+    initial_data= {
+        'username': user.username,
+        'full_name': user.full_name,
+        'email': user.email,
+        'phone_number': user.phone_number,
+    }
+    profile_form = ProfileForm(initial=initial_data)  
+
     context={
         'title': 'Профиль',
         'user': user,
         'role': role,
-        'phone_number_form': phone_number_form
+        'profile_form': profile_form
     }
 
     return render(request, 'profile.html', context=context)
@@ -98,3 +104,20 @@ def upload_avatar(request):
             return JsonResponse(response_data)
 
     return JsonResponse({'error': 'Invalid request'})
+
+# @login_required
+# def update_profile(request):
+#     if request.method == 'POST':
+#         form = ProfileForm(request.POST)
+#         if form.is_valid():
+#             # Хеширование пароля перед сохранением пользователя
+#             password = form.cleaned_data['password']
+#             hashed_password = make_password(password)
+
+#             user = form.save(commit=False)
+#             user.password = hashed_password
+#             user.save()
+
+#             return redirect('profile')
+#     else:
+#         form = ProfileForm()

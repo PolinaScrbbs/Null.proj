@@ -345,7 +345,6 @@ img {
     justify-content: center;
     display: flex;
 }
-}
 
 @media (max-width: 360px) {
     .login__card {
@@ -997,7 +996,9 @@ main{
     color: #5C0089;
     margin-bottom: 5px;
 }
-
+.footer__bottom{
+    text-align: center;
+}
 .footer__links {
     display: flex;
     justify-content: space-between;
@@ -1034,6 +1035,9 @@ main{
 
 .footer__link {
     font-size: 18px;
+}
+.footer__link span a{
+    color: #5C0089;
 }
 
 @media (max-width: 1024px) {
@@ -1405,6 +1409,10 @@ main{
     flex: 0 0 48%;
     margin-bottom: 2rem;
 }
+.profileEdit__input input{
+    color: #fff;
+
+}
 .profileEdit__input div{
     margin-bottom: 10px;
 }
@@ -1419,7 +1427,13 @@ main{
     margin-bottom: 15px;
 }
 .profileEdit__save{
+    width: 100%;
+    margin-top: 1rem;
     text-align: right;
+}
+.profileEdit__back{
+    border-color: #fff !important;
+    margin-right: 1rem;
 }
 .profileEdit__save button{
     border-color: rgba(60, 255, 0, 0.329);
@@ -1468,7 +1482,10 @@ main{
 }
 
 .profileCards_img {
-    width: 5vw;
+    width: 82px;
+    height: 82px;
+    object-fit: cover;
+    
 }
 
 /*========================*/
