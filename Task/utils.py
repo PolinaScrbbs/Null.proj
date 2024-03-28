@@ -26,8 +26,8 @@ def test_task(code, input_data_list, output_data_list):
     for j in range(len(input_data_list)):
         input_data = [x.strip() for x in input_data_list[j].split(", ")]
         test_result, success = execute_code(code, input_data)
-        # print(test_result, success)
         if success:
+            print(test_result, output_data_list[j])
             if str(test_result).strip() == str(output_data_list[j]).strip():
                 correct_tests += 1
                 continue

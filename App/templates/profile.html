@@ -28,34 +28,19 @@
         <div class="profileCards">
             <div class="profileCards__suptitle">Расписание</div>
             <div class="profileCards__container">
-                <div class="profileCards__card">
-                    <div class="profileCards__info">
-                        <div class="profileCards__title">Заголовок</div>
-                        <div class="profileCards__direct">Направление</div>    
+                {% for event in events %}
+                    <div class="profileCards__card">
+                        <div class="profileCards__info">
+                            <div class="profileCards__title">{{event.title}}</div>
+                            <div class="profileCards__direct">{{event.direction}}</div>    
+                        </div>
+                        {% if event.avatar %}
+                            <img class="profileCards_img" src="{{ event.avatar.url }}" alt="">
+                        {% else %}
+                            <img class="profileCards_img" src="{% static "img/null.png" %}" alt="">
+                        {% endif %}
                     </div>
-                    <img class="profileCards_img" src="{% static "img/profile.png" %}" alt="">
-                </div>
-                <div class="profileCards__card">
-                    <div class="profileCards__info">
-                        <div class="profileCards__title">Заголовок</div>
-                        <div class="profileCards__direct">Направление</div>    
-                    </div>
-                    <img class="profileCards_img" src="{% static "img/profile.png" %}" alt="">
-                </div>
-                <div class="profileCards__card">
-                    <div class="profileCards__info">
-                        <div class="profileCards__title">Заголовок</div>
-                        <div class="profileCards__direct">Направление</div>    
-                    </div>
-                    <img class="profileCards_img" src="{% static "img/profile.png" %}" alt="">
-                </div>
-                <div class="profileCards__card">
-                    <div class="profileCards__info">
-                        <div class="profileCards__title">Заголовок</div>
-                        <div class="profileCards__direct">Направление</div>    
-                    </div>
-                    <img class="profileCards_img" src="{% static "img/profile.png" %}" alt="">
-                </div>
+                {% endfor %}
          </div>
         </div>
         <div class="profileEdit">

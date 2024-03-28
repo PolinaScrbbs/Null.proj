@@ -88,9 +88,11 @@
                     </div>
                 </div>
                 <div class="eventSkills__btn">
-                    <button>
-                        Зарегистрироваться
-                    </button>
+                    <a href="{% url 'reg_event' event.title %}">
+                        <button>
+                            Зарегистрироваться
+                        </button>
+                    </a>
                 </div>
             </div>
             <div class="eventInfo__content eventStats__content">

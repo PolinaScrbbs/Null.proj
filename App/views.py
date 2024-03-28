@@ -54,14 +54,12 @@ def reg_event(request, event):
     event = Event.objects.get(title=event)
 
     participant, created = Participant.objects.get_or_create(event=event, user=user)
-    if not created:
-        tasks = Task.objects.filter(event=event)
-        task = tasks.first().title
-        return redirect('event_task', event = event.title, task = task)
-    
-    else:
+    if created:
         event.number_of_participants_update()
-        return redirect('event_info', event = event.title)
+    
+    tasks = Task.objects.filter(event=event)
+    task = tasks.first().title
+    return redirect('event_task', event = event.title, task = task)
 
 #PROFILE==========================================================================================>
 
@@ -69,6 +67,7 @@ def reg_event(request, event):
 def profile(request, username):
     user = CustomUser.objects.get(username=username)
     role = Role.objects.get(id=user.role_id)
+    events = Event.objects.all()
     if request.method == 'POST':
         profile_form = ProfileForm(request.POST, instance=user)
         if profile_form.is_valid():
@@ -80,13 +79,14 @@ def profile(request, username):
         'email': user.email,
         'phone_number': user.phone_number,
     }
-    profile_form = ProfileForm(initial=initial_data)  
+    profile_form = ProfileForm(initial=initial_data)
 
     context={
         'title': 'Профиль',
         'user': user,
         'role': role,
-        'profile_form': profile_form
+        'profile_form': profile_form,
+        'events': events
     }
 
     return render(request, 'profile.html', context=context)

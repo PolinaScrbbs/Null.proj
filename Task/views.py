@@ -92,7 +92,9 @@ def run_code(request):
         run_result , success = test_task(code, input_data_list, output_data_list)
         
         if success and not Result.objects.filter(task=task).exists():
-            participant = Participant.objects.get(user=request.user)
+            event_id = data.get('event_id', None)
+            event = Event.objects.get(id=event_id)
+            participant = Participant.objects.get(user=request.user, event=event)
             result = Result.objects.create(user=participant, task=task, result=code)
             result.right_check()
         

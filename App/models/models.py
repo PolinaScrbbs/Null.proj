@@ -88,9 +88,7 @@ class EventResult(models.Model):
     #     self.event_status_update()
     #     super().save(*args, **kwargs)
 
-    def __str__(self):
-        return self.title
-    
+  
 
 
 

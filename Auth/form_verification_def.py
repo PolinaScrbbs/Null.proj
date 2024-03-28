@@ -59,8 +59,6 @@ def name_checker(label, message):
     label = label.lower()
     
     for forbidden in forbiddens:
-        print(label)
-        print(forbidden)
         if forbidden in label:
             raise forms.ValidationError(f'{message}')
     

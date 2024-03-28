@@ -107,7 +107,9 @@
                         {% if is_last == False %}
                             <button class="toolbar__button" id="resultBotton">Отправить</button>
                         {% else %}
-                            <button class="toolbar__button" id="resultBotton">Завершить</button>
+                        <a href="{% url 'event_info' event.title %}">
+                            <button class="toolbar__button">Завершить</button>
+                        </a>
                         {% endif %}
                     </div>
                 </div>
@@ -185,6 +187,7 @@ if (result_btn) {
 function runCode() {
     var code = editor.getValue();
     var task_id = "{{ task.id }}";
+    var event_id = "{{event.id}}"
 
     fetch('/run_code/', {
         method: 'POST',
@@ -194,7 +197,8 @@ function runCode() {
         },
         body: JSON.stringify({ 
             code: code, 
-            task_id: task_id
+            task_id: task_id,
+            event_id: event_id
         }),
     })
     .then(response => response.json())
