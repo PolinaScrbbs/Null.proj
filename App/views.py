@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from Auth.models import User, Role
+from Subject.models import User, UserRole
 from Event.models import Event, Participant
 from .forms import ProfileForm
 
@@ -45,7 +45,7 @@ def event_catalog(request):
 @login_required 
 def profile(request, username):
     user = User.objects.get(username=username)
-    role = Role.objects.get(id=user.role_id)
+    role = UserRole.objects.get(id=user.role_id)
     events = Event.objects.all()
     if request.method == 'POST':
         profile_form = ProfileForm(request.POST, instance=user)
