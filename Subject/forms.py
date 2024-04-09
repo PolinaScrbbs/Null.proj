@@ -22,11 +22,13 @@ class RegistrationForm(forms.ModelForm):
     def clean_username(self):
         forbidden_symbols = ('!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '=', '[', ']', '{', '}', ';', ':', ',', '<', '>', '/', '?', '|', '\\')
         email_domains = ['@gmail.com', '@mail.ru', '@yandex.ru', '@inbox.ru', '@ok.ru', '@rambler.ru']
+        allowed_symbols = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890'
         username = self.cleaned_data['username']
         
         data_availability(username, 'Имя пользователя')
         length_check(username, 'Имя пользователя', 4, 20)
         check_numeric(username, 'Имя пользователя не может состоять только из цифр')
+        symbols_absence(username, allowed_symbols, 'Никнейм может содержать только английские буквы и цифры')
         symbols_presence(username, forbidden_symbols, 'Поле может содержать только буквы и цифры')
         symbols_presence(username, email_domains, 'Поле не может содержать домен почты')
         name_checker(username, 'Поле содержит запрещённые слова')
@@ -74,10 +76,10 @@ class RegistrationForm(forms.ModelForm):
 
         return cleaned_data
     
-    def __init__(self, *args, **kwargs):
-        super(RegistrationForm, self).__init__(*args, **kwargs)
-        for name, field in self.fields.items():
-            print(f"Field name: {name}, Image URL: {field.widget.attrs.get('image_url')}")
+    # def __init__(self, *args, **kwargs):
+    #     super(RegistrationForm, self).__init__(*args, **kwargs)
+    #     for name, field in self.fields.items():
+    #         print(f"Field name: {name}, Image URL: {field.widget.attrs.get('image_url')}")
 
 
 

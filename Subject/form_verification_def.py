@@ -25,9 +25,9 @@ def symbols_absence(label, symbols, message):
             raise forms.ValidationError(f'{message}')
 
 #Получение модели из строки  
-def get_model_Auth(model_name):
+def get_model_Subject(model_name):
     try:
-        model = apps.get_model('Auth', model_name)
+        model = apps.get_model('Subject', model_name)
         return model
     except LookupError:
         return None
@@ -49,7 +49,11 @@ def is_full_name(label, message):
 
 #Проверка уникальности в бд
 def check_db(model_name, field_name, label, message):
-    model = get_model_Auth(model_name)
+    try:
+        model = apps.get_model(app_label='Subject', model_name=model_name)
+    except LookupError:
+        raise ValueError(f"Model '{model_name}' not found in 'Subject' app.")
+
     if model.objects.filter(**{field_name: label}).exists():
         raise forms.ValidationError(f'{message}')
 
