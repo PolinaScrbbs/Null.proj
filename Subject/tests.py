@@ -1,3 +1,5 @@
+import cProfile
+
 from django.test import TestCase
 from django.urls import reverse
 from .forms import RegistrationForm
