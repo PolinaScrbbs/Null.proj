@@ -20,5 +20,5 @@ class Reward(models.Model):
     class Meta:
         abstract = True
     
-    # exp = models.PositiveIntegerField(blank=False, verbose_name="Опыт")
-    ponts = models.PositiveIntegerField(blank=False, verbose_name="Поинты")
+    exp = models.PositiveIntegerField(blank=False, verbose_name="Опыт")
+    points = models.PositiveIntegerField(blank=False, verbose_name="Поинты")

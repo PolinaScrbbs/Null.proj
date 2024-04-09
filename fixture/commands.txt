@@ -1,1 +1,3 @@
-python manage.py loaddata fixtures/all_fixture.json
+python manage.py loaddata fixture/all_fixtures.json
+
+python -Xutf8 manage.py dumpdata --indent=2 -o fixture/db.json

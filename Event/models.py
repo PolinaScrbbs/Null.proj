@@ -39,18 +39,18 @@ class Tag(models.Model):
     def __str__(self):
         return self.title
     
-# class EventReward(Reward):
-#     pass
-
 class Event(models.Model):
     class Meta:
         verbose_name = 'Событие'
         verbose_name_plural = 'События'
     
+    creator = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Создатель')
     avatar = models.ImageField(upload_to='events', blank=True, verbose_name='Аватар')
     direction = models.ForeignKey(Direction, on_delete=models.CASCADE, verbose_name='Направление')
     title = models.TextField( unique=True, verbose_name='Мероприятие')
-    description = models.TextField(blank=True, null=True, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
+    used_skills = models.TextField(blank=True, null=True, verbose_name='Испольщующиеся навыки')
+    detailed = models.TextField(blank=True, null=True, verbose_name='Подробнее')
     tag = models.ManyToManyField(Tag, verbose_name='Теги')
     number_of_participants = models.PositiveIntegerField(default=0, verbose_name='Количестов участников')
     status = models.ForeignKey(EventStatus, default=1, on_delete=models.CASCADE, verbose_name='Статус события')
@@ -60,6 +60,28 @@ class Event(models.Model):
     def number_of_participants_update(self):
         self.number_of_participants = Participant.objects.filter(event=self).count()
         self.save()
+
+    #Количество заданий
+    @property
+    def task_count(self):
+        return Task.objects.filter(event__title=self.title).count()
+    
+    #Количество опыта
+    @property
+    def exp(self):
+        exp = sum(TaskReward.objects.filter(task__event=self).values_list('exp', flat=True))
+        return exp
+    
+    #Количество очков
+    @property
+    def points(self):
+        points = sum(TaskReward.objects.filter(task__event=self).values_list('points', flat=True))
+        return points
+    
+    # @property
+    # def get_detailed(self):
+    #     points = sum(TaskReward.objects.filter(task__event=self).values_list('points', flat=True))
+    #     return points
 
     def __str__(self):
         return self.title

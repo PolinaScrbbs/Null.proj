@@ -2,11 +2,6 @@ from django.contrib import admin
 
 from .models import *
 
-@admin.register(Organization)
-class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'owner')
-    search_fields = ('name', 'owner')
-
 @admin.register(SocialNetwork)
 class SocialNetworkAdmin(admin.ModelAdmin):
     list_display = ('title',)

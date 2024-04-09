@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from App.models import *
-from Auth.models import User
+from Subject.models import User
 
 from .models import *
 from .functions import *
