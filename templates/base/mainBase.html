@@ -17,7 +17,7 @@
                 <img src="{% static 'base/mainBase/logo.png' %}" alt="">
             </div>
             <div class="header__link">
-                <a href="{% url 'index'%}">Каталог</a>
+                <a href="{% url 'catalog'%}">Мероприятия</a>
             </div>
         </div>
         <div class="header__links">
@@ -32,12 +32,18 @@
                 <span>| >_</span>
             </div>
             <div class="header__info">
-                <a href="{% url 'profile' user.username %}">
-                    {% if user.avatar %}
-                    <img src="{{ user.avatar.url }}" class="header__profile" alt="">
-                    {% else %}
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'profile' user.username %}">
+                        {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" class="header__profile" alt="">
+                        {% else %}
+                            <img src="{% static 'base/mainBase/profile.png' %}" class="header__profile" alt="">
+                        {% endif %}
+                {% else %}
+                    <a href="{% url 'profile' None %}">
                         <img src="{% static 'base/mainBase/profile.png' %}" class="header__profile" alt="">
-                    {% endif %}
+                    </a>
+                {% endif %}
                 </a> 
             </div>
         </div>

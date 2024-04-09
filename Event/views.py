@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from App.models import *
-from Subject.models import User
+from Auth.models import User
 
 from .models import *
 from .functions import *
@@ -12,7 +12,6 @@ from .utils import *
 
 #EVENT==========================================================================================>
 
-@login_required
 def event_info(request, event):
     event = Event.objects.get(title=event)
     try:

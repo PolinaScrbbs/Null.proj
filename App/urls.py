@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import index, profile, upload_avatar
+from .views import index, event_catalog, profile, upload_avatar
 
 urlpatterns = [
     path('', index, name='index'),
+    path('catalog/', event_catalog, name='catalog')
 ]
 
 #Profile

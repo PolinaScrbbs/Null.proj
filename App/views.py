@@ -2,12 +2,20 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from Subject.models import User, UserRole
+from Auth.models import User, Role
 from Event.models import Event, Participant
 from .forms import ProfileForm
 
 # @login_required
-def index(request): 
+def index(request):
+    if request.user.is_authenticated:
+        return redirect('catalog')
+    context = {
+        'title':'.Null'
+    }
+    return render(request, 'index.html', context)
+
+def event_catalog(request):
     if request.user.is_authenticated:
         events = Event.objects.all()
 
@@ -21,19 +29,23 @@ def index(request):
             'registered_events': registered_events
         }
 
-        return render(request, 'event_catalog.html', context=context) 
+        return render(request, 'event_catalog.html', context=context)
     else:
-        context = {
-            'title':'.Null'
-        }
-        return render(request, 'index.html', context)
+        events = Event.objects.all()
 
+        context = {
+            'title': 'Мероприятия',
+            'events': events,
+        }
+
+        return render(request, 'event_catalog.html', context=context)
+        
 #PROFILE==========================================================================================>
 
 @login_required 
 def profile(request, username):
     user = User.objects.get(username=username)
-    role = UserRole.objects.get(id=user.role_id)
+    role = Role.objects.get(id=user.role_id)
     events = Event.objects.all()
     if request.method == 'POST':
         profile_form = ProfileForm(request.POST, instance=user)

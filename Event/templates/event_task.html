@@ -104,13 +104,15 @@
 
                     <div class="toolbar__btns">
                         <button class="toolbar__button" id="runButton">Тест</button>
-                        {% if is_last == False %}
-                            <button class="toolbar__button" id="resultBotton">Отправить</button>
-                        {% else %}
+                        <!-- {% if tasks.last.condition|lower == task|lower %}
+                        <a href="{% url 'event_task' event.title None %}">
+                            <button class="toolbar__button">Отправить</button>
+                        </a>
+                        {% else %} -->
                         <a href="{% url 'event_info' event.title %}">
                             <button class="toolbar__button">Завершить</button>
                         </a>
-                        {% endif %}
+                        <!-- {% endif %} -->
                     </div>
                 </div>
                 

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <title>.Null</title>
+    <title>Null</title>
 </head>
 
 <body>
@@ -21,6 +21,11 @@
             <a href="{% url 'registration' %}">
                 <button class="header__regBtn btn">Присоединиться</button>
             </a>
+            <div class="header__catalog">
+                <button class="header__regBtn btn">
+                    <a href="{% url 'catalog'%}">Мероприятия</a>
+                </button>
+            </div>
         </div>
         <div class="burger-menu-btn">
             <span></span>
@@ -38,6 +43,11 @@
                 <a href="{% url 'registration' %}">
                     <button class="header__regBtn btn">Присоединиться</button>
                 </a>
+                <div class="header__catalog">
+                    <button class="header__regBtn btn">
+                        <a href="{% url 'catalog'%}">Мероприятия</a>
+                    </button>
+                </div>
             </div>
         </div>
     </header>

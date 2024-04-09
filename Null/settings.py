@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    'Subject',
+    'Auth',
     'App',
     'Event'
 ]
@@ -77,11 +77,11 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'Subject.User'
+AUTH_USER_MODEL = 'Auth.User'
 
 #Настройка аутентификации по usermane или email
 AUTHENTICATION_BACKENDS = [
-    'Subject.backends.EmailOrUsernameModelBackend',
+    'Auth.backends.EmailOrUsernameModelBackend',
 ]
 
 #Backend для восстановления пароля
@@ -116,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 #Перенаправление после логина
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'catalog'
 LOGOUT_REDIRECT_URL = 'login'
 
 # Internationalization
@@ -140,7 +140,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #TEMPLATES, STATIC, MEDIA===============================================================================>
 MY_APPS = [
-    'Subject',
+    'Auth',
     'App',
     'Task'
 ]
