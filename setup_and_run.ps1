@@ -14,4 +14,4 @@ python manage.py makemigrations
 
 python manage.py migrate
 
-python manage.py loaddata fixture/all_fixtures.json
+python manage.py loaddata fixture/db.json
