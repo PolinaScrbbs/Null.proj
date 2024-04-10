@@ -12,40 +12,59 @@
 
 <body>
     <header class="header container">
-        <div class="header__links">
-            <div class=" header__logo">
-                <img src="{% static 'base/mainBase/logo.png' %}" alt="">
+        {% if request.user.is_authenticated %}
+            <div class="header__links">
+                <div class=" header__logo">
+                    <img src="{% static 'base/mainBase/logo.png' %}" alt="">
+                </div>
+                <div class="header__link">
+                    <a href="{% url 'catalog'%}">Мероприятия</a>
+                </div>
             </div>
-            <div class="header__link">
-                <a href="{% url 'catalog'%}">Мероприятия</a>
-            </div>
-        </div>
-        <div class="header__links">
-            <div class="header__link">
-                <a class="" href="{% url 'logout' %}">
-                    Организация
-                 </a>
-            </div>
-            <div class="header__searchContainer">
-                <!-- <img src="{% static 'base/mainBase/search.svg' %}" alt=""> -->
-                <input class="header__search" type="text" placeholder="Поиск">
-                <span>| >_</span>
-            </div>
-            <div class="header__info">
-                {% if request.user.is_authenticated %}
-                    <a href="{% url 'profile' user.username %}">
-                        {% if user.avatar %}
-                        <img src="{{ user.avatar.url }}" class="header__profile" alt="">
-                        {% else %}
-                            <img src="{% static 'base/mainBase/profile.png' %}" class="header__profile" alt="">
-                        {% endif %}
-                {% else %}
-                    <a href="{% url 'profile' None %}">
-                        <img src="{% static 'base/mainBase/profile.png' %}" class="header__profile" alt="">
+            <div class="header__links">
+                <div class="header__link">
+                    <a class="" href="{% url 'logout' %}">
+                        Организация
                     </a>
-                {% endif %}
-                </a> 
-            </div>
+                </div>
+                <div class="header__searchContainer">
+                    <!-- <img src="{% static 'base/mainBase/search.svg' %}" alt=""> -->
+                    <input class="header__search" type="text" placeholder="Поиск">
+                    <span>| >_</span>
+                </div>
+                <div class="header__info">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'profile' user.username %}">
+                            {% if user.avatar %}
+                            <img src="{{ user.avatar.url }}" class="header__profile" alt="">
+                            {% else %}
+                                <img src="{% static 'base/mainBase/profile.png' %}" class="header__profile" alt="">
+                            {% endif %}
+                    {% else %}
+                        <a href="{% url 'profile' None %}">
+                            <img src="{% static 'base/mainBase/profile.png' %}" class="header__profile" alt="">
+                        </a>
+                    {% endif %}
+                    </a> 
+                </div>
+            {% else %}
+                <div class="header__link header__logo">
+                    <img src="{% static 'base/mainBase/logo.png' %}" alt="">
+                </div>
+                <div class="header__btns">
+                    <a href="{% url 'login' %}">
+                        <button class="header__loginBtn btn">Войти</button>
+                    </a>
+                    <a href="{% url 'registration' %}">
+                        <button class="header__regBtn btn">Присоединиться</button>
+                    </a>
+                    <div class="header__catalog">
+                        <button class="header__regBtn btn">
+                            <a href="{% url 'catalog'%}">Мероприятия</a>
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
         </div>
         <div class="burger-menu-btn">
             <span></span>
