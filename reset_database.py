@@ -15,7 +15,7 @@ def reset_database():
         os.remove('db.sqlite3')
     
     # Получение списка приложений
-    apps = ['App', 'Subject', 'Event']
+    apps = ['App', 'Subject', 'Event', 'Statistic']
 
     # Удаление и создание папок миграций в каждом приложении
     for app in apps:

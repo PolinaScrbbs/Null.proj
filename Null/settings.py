@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'Subject',
+    'Statistic',
     'App',
     'Event'
 ]

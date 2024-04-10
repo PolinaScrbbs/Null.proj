@@ -50,7 +50,8 @@ class TestDataAdmin(admin.ModelAdmin):
 
 @admin.register(TaskReward)
 class TaskRewardAdmin(admin.ModelAdmin):
-    search_fields = ('task',)
+    list_display = ('task', 'exp', 'points')
+    search_fields = ('task', 'exp', 'points')
 
 @admin.register(TaskComment)
 class TaskCommentAdmin(admin.ModelAdmin):

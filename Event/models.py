@@ -143,6 +143,9 @@ class TaskReward(Reward):
         verbose_name_plural = 'Награды за задания'
     
     task = models.OneToOneField(Task, on_delete=models.CASCADE, verbose_name='Задание')
+    
+    def __str__(self):
+        return self.task
 
 class TaskComment(Comment):
     class Meta:
