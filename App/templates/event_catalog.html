@@ -4,9 +4,14 @@
 {% block content %}
 <main>
     <div class="eventNav container">
-        <div class="eventNav__search">
-            <input type="text" placeholder="Название мероприятия или автор" class="eventNav__input">
-        </div>  
+        <div class="eventNav__search-container">
+            <div class="eventNav__search">
+                <input type="text" placeholder="Название мероприятия" class="eventNav__input">
+            </div>  
+            <button class="eventNav__btn btn">
+                Искать
+            </button>
+        </div>
         <div class="eventNav__mark">
             <label>Активные</label>
             <input type="checkbox">
@@ -18,9 +23,6 @@
             <label>Активные</label>
             <input type="checkbox">
         </div>
-        <button class="eventNav__btn btn">
-            Искать
-        </button>
     </div>
 
     <div class="events">
