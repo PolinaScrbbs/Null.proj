@@ -13,27 +13,17 @@
             <div class="eventInfo__description">{{event.description}}</div>
             <div class="eventInfo__subdescription">
                 <div class="eventInfo__time">{{event.duration}}</div>
-                <div class="eventInfo__author">by Author</div>
+                <div class="eventInfo__author">by {{event.creator.username}}</div>
             </div>
         </div>
         <div class="eventInfo__content eventTags">
             <div class="eventInfo__tags">
+                {% for tag in event.tag.all %}
                 <div class="eventInfo__tag">
-                    <div>9-11 классы</div>
+                    <div>{{tag.title}}</div>
                     <img src="{% static 'icons/base/python.png' %}" alt="">
                 </div>
-                <div class="eventInfo__tag">
-                    <div>Python</div>
-                    <img src="{% static 'icons/base/python.png' %}" alt="">
-                </div>
-                <div class="eventInfo__tag">
-                    <div>Math</div>
-                    <img src="{% static 'icons/base/python.png' %}" alt="">
-                </div>
-                <div class="eventInfo__tag">
-                    <div>DataTime</div>
-                    <img src="{% static 'icons/base/python.png' %}" alt="">
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -42,20 +32,11 @@
             <div class="eventInfo__content eventSkills__content">
                 <div class="eventSkills__title">Использующиеся навыки</div>
                 <div class="eventSkills__lsit">
+                    {% for skill in event.skills %}
                     <div class="eventSkills__skill">
-                        Владение языком Python
+                        {{skill}}
                     </div>
-                    <div class="eventSkills__skill">
-                        Написание простых вычислительных
-                        алгоритмов
-                    </div>
-                    <div class="eventSkills__skill">
-                        Склонность к мазохизму
-                    </div>
-                    <div class="eventSkills__skill">
-                        Навыки написания чистого, понятного
-                        для остальных грамматно структурированного написанного кода
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="eventInfo__content eventSkills__content">
@@ -63,27 +44,26 @@
                     Подробнее
                 </div>
                 <div class="eventDetails__description">
-                    Данный курс служит мостиком между школьной математикой и настоящей живой наукой, знаниями древних греков и тем, что было открыто буквально вчера, а также тем, что еще предстоит узнать человечеству. Курс охватывает все разделы современной математики, показывая их удивительную взаимосвязь, двигаясь по спирали от арифметики и наглядной геометрии для 6-го класса к глубоким фактам теории групп, колец и полей,
-                    кватернионам и теореме Ферма. Автор курса - д.ф.-м.н., к.э.н. А.В.Савватеев, неутомимый популяризатор математики, известный лектор и ютубер.
+                    {{event.detailed}}
                 </div>
             </div>
         </div>
         <div class="eventStats">
             <div class="eventInfo__content eventStats__content">
                 <div class="eventSkills__direction">
-                    Программирвоание
+                    {{event.direction}}
                 </div>
-                <div class="eventSkills__name">Курс по Python</div>
+                <div class="eventSkills__name">{{event.title}}</div>
                 <div class="eventStat">
                     <div class="eventStat__list">
                         <div class="eventStat__tasks">
-                            32
+                            {{event.task_count}}
                         </div>
                         <div class="eventStat__exp">
-                            500
+                            {{event.exp}}
                         </div>
                         <div class="eventStat__score">
-                            420
+                            {{event.points}}
                         </div>
                     </div>
                 </div>
@@ -100,11 +80,15 @@
                     <div class="eventCreater__title">О создателе</div>
                     <div class="eventCreater__content eventCreater">
                         <div class="eventCreater__img">
-                            <img src="{% static 'img/profile.png' %}" alt="">
+                            {% if event.creator.avatar %}
+                                <img src="{{ event.creator.avatar.url }}" alt="">
+                            {% else %}
+                                <img src="{% static 'base/mainBase/profile.png' %}" class="header__profile" alt="">
+                            {% endif %}
                         </div>
                         <div class="eventCreater__info">
                             <div class="eventCreater__name">
-                                <span class="yellow">@</span>name
+                                <span class="yellow">@</span>{{event.creator.username}}
                             </div>
                             <div class="eventCreater__description">
                                 Я люблю программировать на Kotlin 

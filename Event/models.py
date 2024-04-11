@@ -61,6 +61,11 @@ class Event(models.Model):
         self.number_of_participants = Participant.objects.filter(event=self).count()
         self.save()
 
+    #Количество очков
+    @property
+    def skills(self):
+        return self.used_skills.split(', ')
+
     #Количество заданий
     @property
     def task_count(self):
@@ -77,6 +82,8 @@ class Event(models.Model):
     def points(self):
         points = sum(TaskReward.objects.filter(task__event=self).values_list('points', flat=True))
         return points
+
+    
     
     # @property
     # def get_detailed(self):
